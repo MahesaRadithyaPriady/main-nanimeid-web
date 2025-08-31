@@ -78,6 +78,7 @@ export default function Home() {
           <div className="hidden sm:flex items-center gap-3">
             <a href="#countdown" className="bg-yellow-300 border-4 border-black px-4 py-2 font-black hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_0px_#000]">Rilis</a>
             <a href="#features" className="bg-white border-4 border-black px-4 py-2 font-black hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_0px_#000]">Fitur</a>
+            <a href="#about" className="bg-white border-4 border-black px-4 py-2 font-black hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_0px_#000]">Tentang</a>
             <a href="#download" className="bg-black text-yellow-300 border-4 border-black px-4 py-2 font-black hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_#FF0000]">Download</a>
           </div>
         </nav>
@@ -108,6 +109,94 @@ export default function Home() {
         </div>
       </section>
 
+      {/* About Section */}
+      <section id="about" className="text-center mb-20 max-w-6xl mx-auto">
+        <div className="relative inline-block">
+          <h2 className="text-4xl md:text-5xl font-black text-black transform -rotate-1 mb-4 tracking-tight">
+            TENTANG NANIMEID
+          </h2>
+          <div className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 border-4 border-black transform rotate-12"></div>
+          <div className="absolute -bottom-2 -left-2 w-5 h-5 bg-blue-500 border-4 border-black transform -rotate-12"></div>
+        </div>
+
+        <div className="mt-6 bg-black text-yellow-300 p-6 border-8 border-black transform rotate-1 inline-block max-w-3xl mx-auto shadow-[8px_8px_0px_0px_#000000]">
+          <p className="text-lg md:text-xl font-bold">
+            Aplikasi NANIMEID adalah platform streaming anime yang fokus pada pengalaman nonton yang cepat, bebas iklan mengganggu, dan mudah digunakan. Kami berkomitmen menghadirkan update anime terbaru, UI modern, serta fitur favorit untuk menemani harimu.
+          </p>
+        </div>
+      </section>
+
+      {/* Struktur Organisasi */}
+      <section className="max-w-4xl mx-auto mb-20">
+        <div className="bg-red-500 border-8 border-black p-6 transform -rotate-1 shadow-[12px_12px_0px_0px_#000000] mb-8">
+          <h3 className="text-3xl md:text-4xl font-black text-white tracking-tight">Struktur Organisasi</h3>
+        </div>
+
+        <div className="space-y-6">
+          <div className="bg-white border-8 border-black p-6 transform rotate-1 shadow-[8px_8px_0px_0px_#000000]">
+            <h4 className="text-2xl font-black text-black mb-2">Founder</h4>
+            <ul className="list-disc pl-6 font-bold text-black">
+              <li>Mahesa Radithya Priady</li>
+            </ul>
+          </div>
+
+          <div className="bg-blue-500 text-white border-8 border-black p-6 transform -rotate-1 shadow-[8px_8px_0px_0px_#000000]">
+            <h4 className="text-2xl font-black mb-2">Bendahara / Keuangan</h4>
+            <ul className="list-disc pl-6 font-bold">
+              <li>Mutiara Khoerunnisa</li>
+              <li>Syafira Amelia Nur Hidayat</li>
+            </ul>
+          </div>
+
+          <div className="bg-green-500 text-black border-8 border-black p-6 transform rotate-1 shadow-[8px_8px_0px_0px_#000000]">
+            <h4 className="text-2xl font-black mb-2">Uploader</h4>
+            <ul className="list-disc pl-6 font-bold">
+              <li>Azriel Anwar</li>
+              <li>Yori</li>
+            </ul>
+          </div>
+
+          <div className="bg-purple-500 text-white border-8 border-black p-6 transform -rotate-1 shadow-[8px_8px_0px_0px_#000000]">
+            <h4 className="text-2xl font-black mb-2">Pengurus Media Sosial</h4>
+            <ul className="list-disc pl-6 font-bold">
+              <li>Rayhan Hanif Fauzy</li>
+            </ul>
+          </div>
+
+          <div className="bg-yellow-300 text-black border-8 border-black p-6 transform rotate-1 shadow-[8px_8px_0px_0px_#000000]">
+            <h4 className="text-2xl font-black mb-2">Design</h4>
+            <ul className="list-disc pl-6 font-bold">
+              <li>Adya Ahmad Pramudya</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Visi & Misi */}
+      <section className="max-w-6xl mx-auto mb-20">
+        <div className="bg-black text-yellow-300 p-6 border-8 border-black transform rotate-1 shadow-[12px_12px_0px_0px_#FF0000] mb-8 text-center">
+          <h3 className="text-3xl md:text-4xl font-black tracking-wide">Visi & Misi</h3>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="bg-white border-8 border-black p-6 transform -rotate-1 shadow-[8px_8px_0px_0px_#000000]">
+            <h4 className="text-2xl font-black text-black mb-3">Visi</h4>
+            <p className="font-bold text-black">
+              Menjadi platform streaming anime pilihan utama di Indonesia dengan pengalaman nonton yang cepat, aman, dan menyenangkan untuk semua kalangan.
+            </p>
+          </div>
+
+          <div className="bg-green-500 border-8 border-black p-6 transform rotate-1 shadow-[8px_8px_0px_0px_#000000] text-black">
+            <h4 className="text-2xl font-black mb-3">Misi</h4>
+            <ul className="list-disc pl-6 font-bold space-y-1">
+              <li>Menyediakan update anime terbaru secara konsisten.</li>
+              <li>Menghadirkan antarmuka modern yang mudah digunakan.</li>
+              <li>Meminimalkan iklan mengganggu demi kenyamanan pengguna.</li>
+              <li>Mendukung komunitas anime lokal melalui konten berkualitas.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
       {/* Countdown Section */}
       <section id="countdown" className="mb-20 max-w-6xl mx-auto">
         <div className="bg-yellow-300 border-8 border-black p-8 transform rotate-1 shadow-[12px_12px_0px_0px_#000000] mb-8 text-center">
@@ -287,6 +376,24 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      {/* Roadmap / Future Plans */}
+      <section className="max-w-6xl mx-auto mb-20">
+        <div className="bg-blue-500 border-8 border-black p-6 transform -rotate-1 shadow-[12px_12px_0px_0px_#000000] mb-8 text-center">
+          <h3 className="text-3xl md:text-4xl font-black text-white tracking-wide">Rencana Besar ke Depan</h3>
+        </div>
+
+        <div className="grid grid-cols-1 gap-6">
+          <div className="bg-white border-8 border-black p-6 transform rotate-1 shadow-[8px_8px_0px_0px_#000000]">
+            <h4 className="text-2xl font-black text-black mb-2">1. Buat versi webnya</h4>
+            <p className="font-bold text-black">Menghadirkan versi web NANIMEID agar bisa diakses langsung dari browser dengan performa cepat dan tampilan responsif.</p>
+          </div>
+          <div className="bg-green-500 border-8 border-black p-6 transform -rotate-1 shadow-[8px_8px_0px_0px_#000000] text-black">
+            <h4 className="text-2xl font-black mb-2">2. Baca komik manga dalam 1 app</h4>
+            <p className="font-bold">Menambahkan fitur pembaca manga terintegrasi, sehingga pengguna bisa streaming anime dan membaca manga dalam satu aplikasi.</p>
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="w-full border-t-8 border-black pt-8">
