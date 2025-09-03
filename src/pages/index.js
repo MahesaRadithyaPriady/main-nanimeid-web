@@ -80,6 +80,7 @@ export default function Home() {
             <a href="#features" className="bg-white border-4 border-black px-4 py-2 font-black hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_0px_#000]">Fitur</a>
             <a href="#about" className="bg-white border-4 border-black px-4 py-2 font-black hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_0px_#000]">Tentang</a>
             <a href="#download" className="bg-black text-yellow-300 border-4 border-black px-4 py-2 font-black hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_#FF0000]">Download</a>
+            <a href="#community" className="bg-green-500 text-black border-4 border-black px-4 py-2 font-black hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_0px_#000]">Komunitas</a>
           </div>
         </nav>
       
@@ -392,6 +393,29 @@ export default function Home() {
             <h4 className="text-2xl font-black mb-2">2. Baca komik manga dalam 1 app</h4>
             <p className="font-bold">Menambahkan fitur pembaca manga terintegrasi, sehingga pengguna bisa streaming anime dan membaca manga dalam satu aplikasi.</p>
           </div>
+        </div>
+      </section>
+
+      {/* Community Section */}
+      <section id="community" className="max-w-4xl mx-auto mb-20 text-center">
+        <div className="bg-green-500 border-8 border-black p-8 transform -rotate-1 shadow-[12px_12px_0px_0px_#000000] mb-6">
+          <h3 className="text-3xl md:text-4xl font-black text-black tracking-wide">Gabung Komunitas WA</h3>
+        </div>
+        <div className="bg-white border-8 border-black p-6 transform rotate-1 shadow-[8px_8px_0px_0px_#000000] max-w-2xl mx-auto">
+          <p className="font-bold text-black text-lg">
+            Ayo gabung ke grup WhatsApp resmi NANIMEID untuk update terbaru, diskusi anime, dan info rilis!
+          </p>
+        </div>
+        <div className="mt-8">
+          <a
+            href="https://chat.whatsapp.com/Goqy8OktkPN0ZLn6TXOimG?mode=ems_copy_c"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-black text-yellow-300 border-8 border-black px-10 py-5 font-black text-2xl transform hover:rotate-2 hover:scale-105 transition-all shadow-[8px_8px_0px_0px_#25D366]"
+            title="Gabung Komunitas WhatsApp NANIMEID"
+          >
+            🚀 Gabung di WhatsApp
+          </a>
         </div>
       </section>
 
