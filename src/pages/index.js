@@ -143,7 +143,7 @@ export default function Home() {
           <div className="bg-blue-500 text-white border-8 border-black p-6 transform -rotate-1 shadow-[8px_8px_0px_0px_#000000]">
             <h4 className="text-2xl font-black mb-2">Bendahara / Keuangan</h4>
             <ul className="list-disc pl-6 font-bold">
-              <li>Mutiara Khoerunnisa</li>
+              <li>Mutiara Khairunnisa</li>
               <li>Syafira Amelia Nur Hidayat</li>
             </ul>
           </div>
