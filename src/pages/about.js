@@ -7,7 +7,7 @@ export default function About() {
         <title>Tentang NANIMEID</title>
         <meta
           name="description"
-          content="Tentang aplikasi NANIMEID dan struktur organisasi tim."
+          content="Tentang aplikasi NANIMEID dan pendirinya."
         />
       </Head>
 
@@ -50,43 +50,8 @@ export default function About() {
             {/* Founder */}
             <div className="bg-white border-8 border-black p-6 transform rotate-1 shadow-[8px_8px_0px_0px_#000000]">
               <h3 className="text-2xl font-black text-black mb-2">Founder</h3>
-              <ul className="list-disc pl-6 font-bold text-black">
-                <li>Mahesa Radithya Priady</li>
-              </ul>
-            </div>
-
-            {/* Bendahara / Keuangan */}
-            <div className="bg-blue-500 text-white border-8 border-black p-6 transform -rotate-1 shadow-[8px_8px_0px_0px_#000000]">
-              <h3 className="text-2xl font-black mb-2">Bendahara / Keuangan</h3>
-              <ul className="list-disc pl-6 font-bold">
-                <li>Mutiara Khoerunnisa</li>
-                <li>Syafira Amelia Nur Hidayat</li>
-              </ul>
-            </div>
-
-            {/* Uploader */}
-            <div className="bg-green-500 text-black border-8 border-black p-6 transform rotate-1 shadow-[8px_8px_0px_0px_#000000]">
-              <h3 className="text-2xl font-black mb-2">Uploader</h3>
-              <ul className="list-disc pl-6 font-bold">
-                <li>Azriel Anwar</li>
-                <li>Yori</li>
-              </ul>
-            </div>
-
-            {/* Media Sosial */}
-            <div className="bg-purple-500 text-white border-8 border-black p-6 transform -rotate-1 shadow-[8px_8px_0px_0px_#000000]">
-              <h3 className="text-2xl font-black mb-2">Pengurus Media Sosial</h3>
-              <ul className="list-disc pl-6 font-bold">
-                <li>Rayhan Hanif Fauzy</li>
-              </ul>
-            </div>
-
-            {/* Design */}
-            <div className="bg-yellow-300 text-black border-8 border-black p-6 transform rotate-1 shadow-[8px_8px_0px_0px_#000000]">
-              <h3 className="text-2xl font-black mb-2">Design</h3>
-              <ul className="list-disc pl-6 font-bold">
-                <li>Adya Ahmad Pramudya</li>
-              </ul>
+              <p className="font-bold text-black">KIRA adalah Founder NANIMEID sejak 2025 dan terus memimpin visi serta pengembangan platform hingga sekarang.</p>
+              <p className="font-bold text-black mt-2">Di bawah arahan KIRA, NANIMEID berfokus pada kecepatan, keamanan, dan pengalaman nonton bebas gangguan untuk komunitas anime di Indonesia.</p>
             </div>
           </div>
         </section>
