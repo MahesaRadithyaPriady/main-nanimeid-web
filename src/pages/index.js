@@ -377,7 +377,7 @@ export default function Home() {
         </div>
         <div className="mt-8">
           <a
-            href="https://chat.whatsapp.com/Goqy8OktkPN0ZLn6TXOimG?mode=ems_copy_c"
+            href="https://chat.whatsapp.com/DbwAK4QpGYu5h3dBUp3btc?mode=ems_copy_c"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-black text-yellow-300 border-8 border-black px-10 py-5 font-black text-2xl transform hover:rotate-2 hover:scale-105 transition-all shadow-[8px_8px_0px_0px_#25D366]"
