@@ -1,10 +1,148 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { Play, Download, Star, Smartphone, Zap, Users, Clock, Shield, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { motion } from "framer-motion";
+
+// Inline UI Components
+const Button = ({ children, variant = "default", size = "md", className = "", asChild, ...props }) => {
+  const baseClasses = "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background";
+  
+  const variants = {
+    default: "bg-transparent text-white hover:bg-white/10 border border-gray-600",
+    outline: "bg-transparent border border-gray-600 text-white hover:bg-white/10",
+    gradient: "bg-transparent text-white hover:bg-white/10 border border-indigo-500",
+    modern: "bg-transparent text-white hover:bg-white/10 border border-green-500"
+  };
+  
+  const sizes = {
+    sm: "h-9 px-3 text-sm",
+    md: "h-10 py-2 px-4",
+    lg: "h-11 px-8 text-lg"
+  };
+  
+  const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`;
+  
+  if (asChild && props.href) {
+    return <a className={classes} {...props}>{children}</a>;
+  }
+  
+  return <button className={classes} {...props}>{children}</button>;
+};
+
+const Card = ({ children, className = "", ...props }) => (
+  <div className={`rounded-lg border bg-gray-800/50 text-white shadow-lg p-4 ${className}`} {...props}>
+    {children}
+  </div>
+);
+
+const CardHeader = ({ children, className = "", ...props }) => (
+  <div className={`flex flex-col space-y-2 mb-4 ${className}`} {...props}>
+    {children}
+  </div>
+);
+
+const CardTitle = ({ children, className = "", ...props }) => (
+  <h3 className={`text-xl font-semibold leading-tight ${className}`} {...props}>
+    {children}
+  </h3>
+);
+
+const CardDescription = ({ children, className = "", ...props }) => (
+  <p className={`text-sm text-gray-300 ${className}`} {...props}>
+    {children}
+  </p>
+);
+
+const CardContent = ({ children, className = "", ...props }) => (
+  <div className={`${className}`} {...props}>
+    {children}
+  </div>
+);
+
+const Badge = ({ children, variant = "default", className = "", ...props }) => {
+  const variants = {
+    default: "bg-primary text-primary-foreground hover:bg-primary/80",
+    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+  };
+  
+  return (
+    <div className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 ${variants[variant]} ${className}`} {...props}>
+      {children}
+    </div>
+  );
+};
+
+// Simple motion wrapper
+const motion = {
+  div: ({ children, whileHover, whileTap, transition, ...props }) => (
+    <div 
+      className="transition-transform hover:scale-105 active:scale-95" 
+      {...props}
+    >
+      {children}
+    </div>
+  )
+};
+
+// Lucide React Icons (simplified SVG versions)
+const Play = ({ className = "w-5 h-5", strokeWidth = 2, ...props }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
+    <polygon points="5,3 19,12 5,21" />
+  </svg>
+);
+
+const Download = ({ className = "w-5 h-5", strokeWidth = 2, ...props }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+    <polyline points="7,10 12,15 17,10" />
+    <line x1="12" y1="15" x2="12" y2="3" />
+  </svg>
+);
+
+const Star = ({ className = "w-5 h-5", strokeWidth = 2, fill, ...props }) => (
+  <svg className={className} fill={fill || "none"} stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
+    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+  </svg>
+);
+
+const Smartphone = ({ className = "w-5 h-5", strokeWidth = 2, ...props }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
+    <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+    <line x1="12" y1="18" x2="12.01" y2="18" />
+  </svg>
+);
+
+const Zap = ({ className = "w-5 h-5", strokeWidth = 2, ...props }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
+    <polygon points="13,2 3,14 12,14 11,22 21,10 12,10" />
+  </svg>
+);
+
+const Users = ({ className = "w-5 h-5", strokeWidth = 2, ...props }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+  </svg>
+);
+
+const Clock = ({ className = "w-5 h-5", strokeWidth = 2, ...props }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
+    <circle cx="12" cy="12" r="10" />
+    <polyline points="12,6 12,12 16,14" />
+  </svg>
+);
+
+const Shield = ({ className = "w-5 h-5", strokeWidth = 2, ...props }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+  </svg>
+);
+
+const Check = ({ className = "w-5 h-5", strokeWidth = 2, ...props }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
+    <polyline points="20,6 9,17 4,12" />
+  </svg>
+);
 
 export default function Home() {
   // Countdown to September 27 (local time). If already passed this year, target next year.
@@ -122,9 +260,9 @@ export default function Home() {
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
-            <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6 bg-white text-black border-white hover:bg-gray-100">
+            <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6">
               <a href="#download">
-                <Check className="w-5 h-5 mr-2" /> Mulai Nonton
+               Mulai Nonton
               </a>
             </Button>
           </motion.div>
@@ -364,9 +502,9 @@ export default function Home() {
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                <Button asChild variant="outline" size="lg" className="w-full bg-white text-black border-white hover:bg-gray-100">
+                <Button asChild variant="outline" size="lg" className="w-full">
                   <a href="https://www.shorturl.at/SZScV" target="_blank" rel="noopener noreferrer">
-                    <Check className="w-5 h-5 mr-2" /> Download Sekarang
+                   Download Sekarang
                   </a>
                 </Button>
               </motion.div>
