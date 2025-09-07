@@ -1,6 +1,10 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { Play, Download, Star, Smartphone, Zap, Users, Clock, Shield } from "lucide-react";
+import { Play, Download, Star, Smartphone, Zap, Users, Clock, Shield, Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
 
 export default function Home() {
   // Countdown to September 27 (local time). If already passed this year, target next year.
@@ -68,261 +72,338 @@ export default function Home() {
           content="Nonton dan download anime favoritmu dengan UI modern, bebas iklan, dan update harian."
         />
       </Head>
-      <main className="min-h-screen bg-gradient-to-br from-yellow-200 via-yellow-300 to-yellow-400 p-6 font-mono">
+      <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black p-6 font-sans">
         {/* Top Nav */}
         <nav className="max-w-6xl mx-auto flex items-center justify-between mb-8">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-black border-4 border-black bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-yellow-300 to-yellow-400"></div>
-            <span className="text-xl font-black tracking-tight">NANIMEID</span>
+            <div className="w-9 h-9 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg shadow-lg"></div>
+            <span className="text-xl font-bold tracking-tight text-white">NANIMEID</span>
           </div>
           <div className="hidden sm:flex items-center gap-3">
-            <a href="#countdown" className="bg-yellow-300 border-4 border-black px-4 py-2 font-black hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_0px_#000]">Rilis</a>
-            <a href="#features" className="bg-white border-4 border-black px-4 py-2 font-black hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_0px_#000]">Fitur</a>
-            <a href="#about" className="bg-white border-4 border-black px-4 py-2 font-black hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_0px_#000]">Tentang</a>
-            <a href="#download" className="bg-black text-yellow-300 border-4 border-black px-4 py-2 font-black hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_#FF0000]">Download</a>
-            <a href="#community" className="bg-green-500 text-black border-4 border-black px-4 py-2 font-black hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_0px_#000]">Komunitas</a>
+            <Button asChild variant="gradient" size="sm">
+              <a href="#countdown">Rilis</a>
+            </Button>
+            <Button asChild variant="outline" size="sm">
+              <a href="#features">Fitur</a>
+            </Button>
+            <Button asChild variant="outline" size="sm">
+              <a href="#about">Tentang</a>
+            </Button>
+            <Button asChild variant="default" size="sm">
+              <a href="#download">Download</a>
+            </Button>
+            <Button asChild variant="modern" size="sm">
+              <a href="#community">Komunitas</a>
+            </Button>
           </div>
         </nav>
       
       {/* Hero Section */}
       <section className="text-center mb-20 max-w-6xl mx-auto">
         <div className="relative inline-block">
-          <h1 className="text-6xl md:text-8xl font-black text-black transform -rotate-1 mb-6 tracking-tight">
+          <h1 className="text-6xl md:text-8xl font-bold text-white mb-6 tracking-tight bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
             NANIMEID
           </h1>
-          <div className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 border-4 border-black transform rotate-12"></div>
-          <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-blue-500 border-4 border-black transform -rotate-12"></div>
+          <div className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-pink-500 to-red-500 rounded-full animate-pulse"></div>
+          <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-pulse"></div>
         </div>
         
-        <div className="bg-black text-yellow-300 p-6 border-8 border-black transform rotate-1 inline-block max-w-2xl mx-auto shadow-[8px_8px_0px_0px_#000000]">
-          <p className="text-xl md:text-2xl font-bold uppercase tracking-wide">
-            STREAMING ANIME TERBAIK<br/>
-            TANPA RIBET!!!
-          </p>
-        </div>
+        <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg max-w-2xl mx-auto">
+          <CardContent className="p-6">
+            <p className="text-xl md:text-2xl font-bold text-center text-white">
+              STREAMING ANIME TERBAIK<br/>
+              <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">TANPA RIBET!</span>
+            </p>
+          </CardContent>
+        </Card>
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="#download" className="group relative bg-red-500 text-white border-8 border-black px-8 py-4 font-black text-xl hover:bg-white hover:text-black transition-all duration-200 transform hover:rotate-2 hover:scale-105 shadow-[8px_8px_0px_0px_#000000] uppercase tracking-wide">
-            <Play className="inline-block w-6 h-6 mr-2" strokeWidth={3} /> Mulai Nonton
-          </a>
-          <a href="#features" className="group relative bg-white text-black border-8 border-black px-8 py-4 font-black text-xl hover:bg-yellow-300 transition-all duration-200 transform hover:-rotate-2 hover:scale-105 shadow-[8px_8px_0px_0px_#000000] uppercase tracking-wide">
-            Lihat Fitur
-          </a>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          >
+            <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6 bg-white text-black border-white hover:bg-gray-100">
+              <a href="#download">
+                <Check className="w-5 h-5 mr-2" /> Mulai Nonton
+              </a>
+            </Button>
+          </motion.div>
+          <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6 border-gray-600 text-white hover:bg-gray-800">
+            <a href="#features">
+              Lihat Fitur
+            </a>
+          </Button>
         </div>
       </section>
 
       {/* About Section */}
       <section id="about" className="text-center mb-20 max-w-6xl mx-auto">
-        <div className="relative inline-block">
-          <h2 className="text-4xl md:text-5xl font-black text-black transform -rotate-1 mb-4 tracking-tight">
+        <div className="relative inline-block mb-8">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
             TENTANG NANIMEID
           </h2>
-          <div className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 border-4 border-black transform rotate-12"></div>
-          <div className="absolute -bottom-2 -left-2 w-5 h-5 bg-blue-500 border-4 border-black transform -rotate-12"></div>
+          <div className="absolute -top-2 -right-2 w-3 h-3 bg-gradient-to-r from-red-500 to-pink-500 rounded-full animate-pulse"></div>
+          <div className="absolute -bottom-2 -left-2 w-2 h-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-pulse"></div>
         </div>
 
-        <div className="mt-6 bg-black text-yellow-300 p-6 border-8 border-black transform rotate-1 inline-block max-w-3xl mx-auto shadow-[8px_8px_0px_0px_#000000]">
-          <p className="text-lg md:text-xl font-bold">
-            Aplikasi NANIMEID adalah platform streaming anime yang fokus pada pengalaman nonton yang cepat, bebas iklan mengganggu, dan mudah digunakan. Kami berkomitmen menghadirkan update anime terbaru, UI modern, serta fitur favorit untuk menemani harimu.
-          </p>
-        </div>
+        <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg max-w-3xl mx-auto">
+          <CardContent className="p-8">
+            <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
+              Aplikasi NANIMEID adalah platform streaming anime yang fokus pada pengalaman nonton yang cepat, bebas iklan mengganggu, dan mudah digunakan. Kami berkomitmen menghadirkan update anime terbaru, UI modern, serta fitur favorit untuk menemani harimu.
+            </p>
+          </CardContent>
+        </Card>
       </section>
 
       {/* Struktur Organisasi */}
       <section className="max-w-4xl mx-auto mb-20">
-        <div className="bg-red-500 border-8 border-black p-6 transform -rotate-1 shadow-[12px_12px_0px_0px_#000000] mb-8">
-          <h3 className="text-3xl md:text-4xl font-black text-white tracking-tight">Struktur Organisasi</h3>
-        </div>
+        <Card className="bg-gradient-to-r from-red-900/50 to-pink-900/50 border-red-800 backdrop-blur-lg mb-8">
+          <CardHeader>
+            <CardTitle className="text-3xl md:text-4xl text-white text-center">Struktur Organisasi</CardTitle>
+          </CardHeader>
+        </Card>
 
         <div className="space-y-6">
-          <div className="bg-white border-8 border-black p-6 transform rotate-1 shadow-[8px_8px_0px_0px_#000000]">
-            <h4 className="text-2xl font-black text-black mb-2">Founder</h4>
-            <p className="font-bold text-black">KIRA adalah Founder NANIMEID sejak 2025 dan terus memimpin pengembangan serta visi platform hingga sekarang.</p>
-            <p className="font-bold text-black mt-2">Fokus pada pengalaman nonton yang cepat, aman, dan bebas gangguan, KIRA mendorong inovasi fitur dan kualitas layanan untuk komunitas anime Indonesia.</p>
-          </div>
+          <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg">
+            <CardHeader>
+              <CardTitle className="text-2xl text-white">Founder</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-300 mb-4">KIRA adalah Founder NANIMEID sejak 2025 dan terus memimpin pengembangan serta visi platform hingga sekarang.</p>
+              <p className="text-gray-300">Fokus pada pengalaman nonton yang cepat, aman, dan bebas gangguan, KIRA mendorong inovasi fitur dan kualitas layanan untuk komunitas anime Indonesia.</p>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
       {/* Visi & Misi */}
       <section className="max-w-6xl mx-auto mb-20">
-        <div className="bg-black text-yellow-300 p-6 border-8 border-black transform rotate-1 shadow-[12px_12px_0px_0px_#FF0000] mb-8 text-center">
-          <h3 className="text-3xl md:text-4xl font-black tracking-wide">Visi & Misi</h3>
-        </div>
+        <Card className="bg-gradient-to-r from-purple-900/50 to-indigo-900/50 border-purple-800 backdrop-blur-lg mb-8">
+          <CardHeader>
+            <CardTitle className="text-3xl md:text-4xl text-white text-center">Visi & Misi</CardTitle>
+          </CardHeader>
+        </Card>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white border-8 border-black p-6 transform -rotate-1 shadow-[8px_8px_0px_0px_#000000]">
-            <h4 className="text-2xl font-black text-black mb-3">Visi</h4>
-            <p className="font-bold text-black">
-              Menjadi platform streaming anime pilihan utama di Indonesia dengan pengalaman nonton yang cepat, aman, dan menyenangkan untuk semua kalangan.
-            </p>
-          </div>
+          <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg">
+            <CardHeader>
+              <CardTitle className="text-2xl text-white">Visi</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-300">
+                Menjadi platform streaming anime pilihan utama di Indonesia dengan pengalaman nonton yang cepat, aman, dan menyenangkan untuk semua kalangan.
+              </p>
+            </CardContent>
+          </Card>
 
-          <div className="bg-green-500 border-8 border-black p-6 transform rotate-1 shadow-[8px_8px_0px_0px_#000000] text-black">
-            <h4 className="text-2xl font-black mb-3">Misi</h4>
-            <ul className="list-disc pl-6 font-bold space-y-1">
-              <li>Menyediakan update anime terbaru secara konsisten.</li>
-              <li>Menghadirkan antarmuka modern yang mudah digunakan.</li>
-              <li>Meminimalkan iklan mengganggu demi kenyamanan pengguna.</li>
-              <li>Mendukung komunitas anime lokal melalui konten berkualitas.</li>
-            </ul>
-          </div>
+          <Card className="bg-gradient-to-br from-green-900/50 to-emerald-900/50 border-green-800 backdrop-blur-lg">
+            <CardHeader>
+              <CardTitle className="text-2xl text-white">Misi</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="list-disc pl-6 text-gray-300 space-y-2">
+                <li>Menyediakan update anime terbaru secara konsisten.</li>
+                <li>Menghadirkan antarmuka modern yang mudah digunakan.</li>
+                <li>Meminimalkan iklan mengganggu demi kenyamanan pengguna.</li>
+                <li>Mendukung komunitas anime lokal melalui konten berkualitas.</li>
+              </ul>
+            </CardContent>
+          </Card>
         </div>
       </section>
       {/* Countdown Section */}
       <section id="countdown" className="mb-20 max-w-6xl mx-auto">
-        <div className="bg-yellow-300 border-8 border-black p-8 transform rotate-1 shadow-[12px_12px_0px_0px_#000000] mb-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-black text-black tracking-tight mb-2">
-            Menuju Rilis 27 September
-          </h2>
-          <p className="font-bold text-black opacity-80">Tandai kalendermu dan siap-siap nonton!</p>
-        </div>
+        <Card className="bg-gradient-to-r from-yellow-900/50 to-orange-900/50 border-yellow-800 backdrop-blur-lg mb-8">
+          <CardHeader className="text-center">
+            <CardTitle className="text-3xl md:text-4xl text-white mb-2">
+              Menuju Rilis 27 September
+            </CardTitle>
+            <CardDescription className="text-gray-300 text-lg">Tandai kalendermu dan siap-siap nonton!</CardDescription>
+          </CardHeader>
+        </Card>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
-          <div className="bg-white border-8 border-black p-4 text-center transform -rotate-1 shadow-[8px_8px_0px_0px_#000000]">
-            <div className="text-4xl md:text-5xl font-black text-black">{timeLeft.days}</div>
-            <div className="text-sm md:text-base font-bold uppercase text-black">Hari</div>
-          </div>
-          <div className="bg-blue-500 border-8 border-black p-4 text-center transform rotate-1 shadow-[8px_8px_0px_0px_#000000] text-white">
-            <div className="text-4xl md:text-5xl font-black">{String(timeLeft.hours).padStart(2, '0')}</div>
-            <div className="text-sm md:text-base font-bold uppercase">Jam</div>
-          </div>
-          <div className="bg-green-500 border-8 border-black p-4 text-center transform -rotate-1 shadow-[8px_8px_0px_0px_#000000] text-black">
-            <div className="text-4xl md:text-5xl font-black">{String(timeLeft.minutes).padStart(2, '0')}</div>
-            <div className="text-sm md:text-base font-bold uppercase">Menit</div>
-          </div>
-          <div className="bg-red-500 border-8 border-black p-4 text-center transform rotate-1 shadow-[8px_8px_0px_0px_#000000] text-white">
-            <div className="text-4xl md:text-5xl font-black">{String(timeLeft.seconds).padStart(2, '0')}</div>
-            <div className="text-sm md:text-base font-bold uppercase">Detik</div>
-          </div>
+          <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg">
+            <CardContent className="p-6 text-center">
+              <div className="text-4xl md:text-5xl font-bold text-white">{timeLeft.days}</div>
+              <div className="text-sm md:text-base font-medium uppercase text-gray-400">Hari</div>
+            </CardContent>
+          </Card>
+          <Card className="bg-gradient-to-br from-blue-900/50 to-indigo-900/50 border-blue-800 backdrop-blur-lg">
+            <CardContent className="p-6 text-center">
+              <div className="text-4xl md:text-5xl font-bold text-white">{String(timeLeft.hours).padStart(2, '0')}</div>
+              <div className="text-sm md:text-base font-medium uppercase text-gray-300">Jam</div>
+            </CardContent>
+          </Card>
+          <Card className="bg-gradient-to-br from-green-900/50 to-emerald-900/50 border-green-800 backdrop-blur-lg">
+            <CardContent className="p-6 text-center">
+              <div className="text-4xl md:text-5xl font-bold text-white">{String(timeLeft.minutes).padStart(2, '0')}</div>
+              <div className="text-sm md:text-base font-medium uppercase text-gray-300">Menit</div>
+            </CardContent>
+          </Card>
+          <Card className="bg-gradient-to-br from-red-900/50 to-pink-900/50 border-red-800 backdrop-blur-lg">
+            <CardContent className="p-6 text-center">
+              <div className="text-4xl md:text-5xl font-bold text-white">{String(timeLeft.seconds).padStart(2, '0')}</div>
+              <div className="text-sm md:text-base font-medium uppercase text-gray-300">Detik</div>
+            </CardContent>
+          </Card>
         </div>
 
         <div className="text-center mt-8">
           {released ? (
-            <a href="#download" className="inline-block bg-black text-yellow-300 border-8 border-black px-8 py-4 font-black text-xl transform hover:rotate-2 hover:scale-105 transition-all shadow-[8px_8px_0px_0px_#FF0000]">
-              Rilis hari ini! Download sekarang
-            </a>
+            <Button asChild variant="gradient" size="lg" className="text-xl px-8 py-6">
+              <a href="#download">
+                Rilis hari ini! Download sekarang
+              </a>
+            </Button>
           ) : (
-            <span className="inline-block bg-white border-8 border-black px-6 py-3 font-black text-lg transform hover:-rotate-1 transition-all shadow-[8px_8px_0px_0px_#000000]">
+            <Badge variant="secondary" className="text-lg px-6 py-3 bg-gray-800 text-gray-300 border-gray-600">
               Hitung mundur dimulai...
-            </span>
+            </Badge>
           )}
         </div>
       </section>
 
       {/* Features Section */}
       <section id="features" className="mb-20 max-w-6xl mx-auto">
-        <div className="bg-red-500 border-8 border-black p-8 transform -rotate-1 shadow-[12px_12px_0px_0px_#000000] mb-8">
-          <h2 className="text-4xl md:text-5xl font-black text-white mb-6 transform rotate-1 tracking-tight">
-            FITUR KEREN!
-          </h2>
-        </div>
+        <Card className="bg-gradient-to-r from-red-900/50 to-pink-900/50 border-red-800 backdrop-blur-lg mb-8">
+          <CardHeader>
+            <CardTitle className="text-4xl md:text-5xl text-white text-center">
+              FITUR KEREN!
+            </CardTitle>
+          </CardHeader>
+        </Card>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white border-8 border-black p-6 transform rotate-1 shadow-[8px_8px_0px_0px_#000000] hover:translate-y-[-4px] transition-transform">
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-green-500 border-4 border-black mr-4 flex items-center justify-center">
-                <Shield className="w-6 h-6 text-black" strokeWidth={3} />
+          <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg">
+            <CardContent className="p-6">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg mr-4 flex items-center justify-center">
+                  <Shield className="w-6 h-6 text-white" strokeWidth={2} />
+                </div>
+                <CardTitle className="text-white">BEBAS IKLAN</CardTitle>
               </div>
-              <h3 className="text-2xl font-black text-black">BEBAS IKLAN</h3>
-            </div>
-            <p className="text-black font-bold text-lg">Nonton anime tanpa gangguan iklan yang menyebalkan!</p>
-          </div>
+              <p className="text-gray-300">Nonton anime tanpa gangguan iklan yang menyebalkan!</p>
+            </CardContent>
+          </Card>
           
-          <div className="bg-blue-500 border-8 border-black p-6 transform -rotate-1 shadow-[8px_8px_0px_0px_#000000] hover:translate-y-[-4px] transition-transform">
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-yellow-300 border-4 border-black mr-4 flex items-center justify-center">
-                <Zap className="w-6 h-6 text-black" strokeWidth={3} />
+          <Card className="bg-gradient-to-br from-blue-900/50 to-indigo-900/50 border-blue-800 backdrop-blur-lg">
+            <CardContent className="p-6">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg mr-4 flex items-center justify-center">
+                  <Zap className="w-6 h-6 text-white" strokeWidth={2} />
+                </div>
+                <CardTitle className="text-white">UPDATE HARIAN</CardTitle>
               </div>
-              <h3 className="text-2xl font-black text-white">UPDATE HARIAN</h3>
-            </div>
-            <p className="text-white font-bold text-lg">Episode terbaru langsung tersedia setiap hari!</p>
-          </div>
+              <p className="text-gray-300">Episode terbaru langsung tersedia setiap hari!</p>
+            </CardContent>
+          </Card>
           
-          <div className="bg-green-500 border-8 border-black p-6 transform rotate-1 shadow-[8px_8px_0px_0px_#000000] hover:translate-y-[-4px] transition-transform">
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-red-500 border-4 border-black mr-4 flex items-center justify-center">
-                <Star className="w-6 h-6 text-white" strokeWidth={3} fill="white" />
+          <Card className="bg-gradient-to-br from-green-900/50 to-emerald-900/50 border-green-800 backdrop-blur-lg">
+            <CardContent className="p-6">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-pink-500 rounded-lg mr-4 flex items-center justify-center">
+                  <Star className="w-6 h-6 text-white" strokeWidth={2} fill="white" />
+                </div>
+                <CardTitle className="text-white">DAFTAR FAVORIT</CardTitle>
               </div>
-              <h3 className="text-2xl font-black text-black">DAFTAR FAVORIT</h3>
-            </div>
-            <p className="text-black font-bold text-lg">Simpan anime favorit & track history tontonanmu!</p>
-          </div>
+              <p className="text-gray-300">Simpan anime favorit & track history tontonanmu!</p>
+            </CardContent>
+          </Card>
           
-          <div className="bg-purple-500 border-8 border-black p-6 transform -rotate-1 shadow-[8px_8px_0px_0px_#000000] hover:translate-y-[-4px] transition-transform">
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-yellow-300 border-4 border-black mr-4 flex items-center justify-center">
-                <Smartphone className="w-6 h-6 text-black" strokeWidth={3} />
+          <Card className="bg-gradient-to-br from-purple-900/50 to-violet-900/50 border-purple-800 backdrop-blur-lg">
+            <CardContent className="p-6">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg mr-4 flex items-center justify-center">
+                  <Smartphone className="w-6 h-6 text-white" strokeWidth={2} />
+                </div>
+                <CardTitle className="text-white">UI MODERN</CardTitle>
               </div>
-              <h3 className="text-2xl font-black text-white">UI MODERN</h3>
-            </div>
-            <p className="text-white font-bold text-lg">Interface keren yang mudah digunakan siapa aja!</p>
-          </div>
+              <p className="text-gray-300">Interface keren yang mudah digunakan siapa aja!</p>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
       {/* Requirements Section */}
       <section className="mb-20 text-center max-w-6xl mx-auto">
-        <div className="bg-black text-yellow-300 p-8 border-8 border-black transform rotate-1 shadow-[12px_12px_0px_0px_#FF0000] max-w-2xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-black mb-4 tracking-wide">
-            SYARAT DOWNLOAD
-          </h2>
-          <div className="flex items-center justify-center mb-2">
-            <Smartphone className="w-6 h-6 mr-3" strokeWidth={3} />
-            <p className="text-xl font-bold">Android 5.0 ke atas</p>
-          </div>
-          <div className="flex items-center justify-center mb-2">
-            <Download className="w-6 h-6 mr-3" strokeWidth={3} />
-            <p className="text-xl font-bold">Minimal 100MB storage</p>
-          </div>
-          <div className="flex items-center justify-center">
-            <Zap className="w-6 h-6 mr-3" strokeWidth={3} />
-            <p className="text-xl font-bold">Koneksi internet stabil</p>
-          </div>
-        </div>
+        <Card className="bg-gradient-to-r from-gray-900/50 to-slate-900/50 border-gray-700 backdrop-blur-lg max-w-2xl mx-auto">
+          <CardHeader>
+            <CardTitle className="text-3xl md:text-4xl text-white mb-4">
+              SYARAT DOWNLOAD
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center justify-center">
+              <Smartphone className="w-6 h-6 mr-3 text-indigo-400" strokeWidth={2} />
+              <p className="text-xl text-gray-300">Android 5.0 ke atas</p>
+            </div>
+            <div className="flex items-center justify-center">
+              <Download className="w-6 h-6 mr-3 text-green-400" strokeWidth={2} />
+              <p className="text-xl text-gray-300">Minimal 100MB storage</p>
+            </div>
+            <div className="flex items-center justify-center">
+              <Zap className="w-6 h-6 mr-3 text-yellow-400" strokeWidth={2} />
+              <p className="text-xl text-gray-300">Koneksi internet stabil</p>
+            </div>
+          </CardContent>
+        </Card>
       </section>
 
       {/* Download Buttons */}
       <section id="download" className="flex flex-col lg:flex-row gap-12 mb-20 justify-center items-center max-w-6xl mx-auto">
-        <a
-          aria-disabled
-          className="group relative bg-red-500 text-white border-8 border-black px-12 py-8 font-black text-2xl transition-all duration-200 transform shadow-[8px_8px_0px_0px_#000000] uppercase tracking-wide pointer-events-none opacity-60 cursor-not-allowed"
-          title="Segera hadir"
-        >
-          <div className="absolute -top-2 -left-2 w-6 h-6 bg-yellow-300 border-4 border-black"></div>
-          <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-blue-500 border-4 border-black"></div>
-          DOWNLOAD APK
-          <br/>
-          <span className="text-lg">🚧 Segera Hadir</span>
-        </a>
+        <Card className="bg-gradient-to-br from-red-900/50 to-pink-900/50 border-red-800 backdrop-blur-lg hover:shadow-xl transition-all duration-300">
+          <CardContent className="p-8 text-center">
+            <div className="relative">
+              <div className="absolute -top-2 -left-2 w-3 h-3 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
+              <div className="absolute -bottom-2 -right-2 w-3 h-3 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full animate-pulse"></div>
+              <h3 className="text-2xl font-bold text-white mb-2">DOWNLOAD APK</h3>
+              <p className="text-lg text-green-400 mb-4">✅ v1.0.0 Beta 2</p>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
+                <Button asChild variant="outline" size="lg" className="w-full bg-white text-black border-white hover:bg-gray-100">
+                  <a href="https://www.shorturl.at/SZScV" target="_blank" rel="noopener noreferrer">
+                    <Check className="w-5 h-5 mr-2" /> Download Sekarang
+                  </a>
+                </Button>
+              </motion.div>
+            </div>
+          </CardContent>
+        </Card>
 
-        <a
-          aria-disabled
-          className="group relative bg-green-500 text-black border-8 border-black px-12 py-8 font-black text-2xl transition-all duration-200 transform shadow-[8px_8px_0px_0px_#000000] uppercase tracking-wide pointer-events-none opacity-60 cursor-not-allowed"
-          title="Segera hadir"
-        >
-          <div className="absolute -top-2 -right-2 w-6 h-6 bg-purple-500 border-4 border-black"></div>
-          <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-red-500 border-4 border-black"></div>
-          PLAY STORE
-          <br/>
-          <span className="text-lg">🚧 Segera Hadir</span>
-        </a>
+        <Card className="bg-gradient-to-br from-green-900/30 to-emerald-900/30 border-green-800/50 backdrop-blur-lg opacity-60">
+          <CardContent className="p-8 text-center">
+            <div className="relative">
+              <div className="absolute -top-2 -right-2 w-3 h-3 bg-gradient-to-r from-purple-400 to-violet-400 rounded-full animate-pulse"></div>
+              <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-gradient-to-r from-red-400 to-pink-400 rounded-full animate-pulse"></div>
+              <h3 className="text-2xl font-bold text-white mb-2">PLAY STORE</h3>
+              <p className="text-lg text-gray-400">🚧 Segera Hadir</p>
+            </div>
+          </CardContent>
+        </Card>
       </section>
 
       {/* Warning Section */}
       <section className="mb-20 w-full max-w-4xl mx-auto">
-          <div className="bg-red-500 border-8 border-black p-8 transform -rotate-1 shadow-[12px_12px_0px_0px_#000000]">
-          <div className="flex items-center justify-center mb-4">
-            <div className="w-12 h-12 bg-yellow-300 border-4 border-black mr-4 flex items-center justify-center">
-              <Shield className="w-8 h-8 text-black" strokeWidth={4} />
+        <Card className="bg-gradient-to-r from-red-900/50 to-orange-900/50 border-red-800 backdrop-blur-lg">
+          <CardContent className="p-8">
+            <div className="flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg mr-4 flex items-center justify-center">
+                <Shield className="w-8 h-8 text-white" strokeWidth={2} />
+              </div>
+              <CardTitle className="text-3xl md:text-4xl text-white">
+                PERHATIAN!
+              </CardTitle>
             </div>
-            <h2 className="text-3xl md:text-4xl font-black text-white tracking-wide">
-              PERHATIAN!
-            </h2>
-          </div>
-          <p className="text-white font-bold text-xl text-center">
-            HANYA DOWNLOAD DARI LINK RESMI DI ATAS!<br/>
-            WASPADAI APLIKASI PALSU & MALWARE!
-          </p>
-        </div>
+            <p className="text-gray-300 text-xl text-center">
+              HANYA DOWNLOAD DARI LINK RESMI DI ATAS!<br/>
+              WASPADAI APLIKASI PALSU & MALWARE!
+            </p>
+          </CardContent>
+        </Card>
       </section>
 
       {/* Stats Section - temporarily disabled */}
@@ -349,63 +430,80 @@ export default function Home() {
 
       {/* Roadmap / Future Plans */}
       <section className="max-w-6xl mx-auto mb-20">
-        <div className="bg-blue-500 border-8 border-black p-6 transform -rotate-1 shadow-[12px_12px_0px_0px_#000000] mb-8 text-center">
-          <h3 className="text-3xl md:text-4xl font-black text-white tracking-wide">Rencana Besar ke Depan</h3>
-        </div>
+        <Card className="bg-gradient-to-r from-blue-900/50 to-cyan-900/50 border-blue-800 backdrop-blur-lg mb-8">
+          <CardHeader>
+            <CardTitle className="text-3xl md:text-4xl text-white text-center">Rencana Besar ke Depan</CardTitle>
+          </CardHeader>
+        </Card>
 
         <div className="grid grid-cols-1 gap-6">
-          <div className="bg-white border-8 border-black p-6 transform rotate-1 shadow-[8px_8px_0px_0px_#000000]">
-            <h4 className="text-2xl font-black text-black mb-2">1. Buat versi webnya</h4>
-            <p className="font-bold text-black">Menghadirkan versi web NANIMEID agar bisa diakses langsung dari browser dengan performa cepat dan tampilan responsif.</p>
-          </div>
-          <div className="bg-green-500 border-8 border-black p-6 transform -rotate-1 shadow-[8px_8px_0px_0px_#000000] text-black">
-            <h4 className="text-2xl font-black mb-2">2. Baca komik manga dalam 1 app</h4>
-            <p className="font-bold">Menambahkan fitur pembaca manga terintegrasi, sehingga pengguna bisa streaming anime dan membaca manga dalam satu aplikasi.</p>
-          </div>
+          <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg">
+            <CardHeader>
+              <CardTitle className="text-2xl text-white">1. Buat versi webnya</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-300">Menghadirkan versi web NANIMEID agar bisa diakses langsung dari browser dengan performa cepat dan tampilan responsif.</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-gradient-to-br from-green-900/50 to-emerald-900/50 border-green-800 backdrop-blur-lg">
+            <CardHeader>
+              <CardTitle className="text-2xl text-white">2. Baca komik manga dalam 1 app</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-300">Menambahkan fitur pembaca manga terintegrasi, sehingga pengguna bisa streaming anime dan membaca manga dalam satu aplikasi.</p>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
       {/* Community Section */}
       <section id="community" className="max-w-4xl mx-auto mb-20 text-center">
-        <div className="bg-green-500 border-8 border-black p-8 transform -rotate-1 shadow-[12px_12px_0px_0px_#000000] mb-6">
-          <h3 className="text-3xl md:text-4xl font-black text-black tracking-wide">Gabung Komunitas WA</h3>
-        </div>
-        <div className="bg-white border-8 border-black p-6 transform rotate-1 shadow-[8px_8px_0px_0px_#000000] max-w-2xl mx-auto">
-          <p className="font-bold text-black text-lg">
-            Ayo gabung ke grup WhatsApp resmi NANIMEID untuk update terbaru, diskusi anime, dan info rilis!
-          </p>
-        </div>
+        <Card className="bg-gradient-to-r from-green-900/50 to-emerald-900/50 border-green-800 backdrop-blur-lg mb-6">
+          <CardHeader>
+            <CardTitle className="text-3xl md:text-4xl text-white">Gabung Komunitas WA</CardTitle>
+          </CardHeader>
+        </Card>
+        <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg max-w-2xl mx-auto mb-8">
+          <CardContent className="p-6">
+            <p className="text-gray-300 text-lg">
+              Ayo gabung ke grup WhatsApp resmi NANIMEID untuk update terbaru, diskusi anime, dan info rilis!
+            </p>
+          </CardContent>
+        </Card>
         <div className="mt-8">
-          <a
-            href="https://chat.whatsapp.com/DbwAK4QpGYu5h3dBUp3btc?mode=ems_copy_c"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-black text-yellow-300 border-8 border-black px-10 py-5 font-black text-2xl transform hover:rotate-2 hover:scale-105 transition-all shadow-[8px_8px_0px_0px_#25D366]"
-            title="Gabung Komunitas WhatsApp NANIMEID"
-          >
-            🚀 Gabung di WhatsApp
-          </a>
+          <Button asChild variant="modern" size="lg" className="text-2xl px-10 py-6">
+            <a
+              href="https://chat.whatsapp.com/DbwAK4QpGYu5h3dBUp3btc?mode=ems_copy_c"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Gabung Komunitas WhatsApp NANIMEID"
+            >
+              🚀 Gabung di WhatsApp
+            </a>
+          </Button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="w-full border-t-8 border-black pt-8">
-        <div className="bg-black text-yellow-300 p-6 border-8 border-black transform rotate-1 shadow-[8px_8px_0px_0px_#FF0000] max-w-2xl mx-auto text-center">
-          <p className="font-black text-lg uppercase tracking-wide mb-2">
-            © 2025 NANIMEID
-          </p>
-          <p className="font-bold">
-            SEMUA HAK DILINDUNGI UNDANG-UNDANG
-          </p>
-        </div>
+      <footer className="w-full border-t border-gray-700 pt-8">
+        <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg max-w-2xl mx-auto text-center">
+          <CardContent className="p-6">
+            <p className="font-bold text-lg text-white mb-2">
+              © 2025 NANIMEID
+            </p>
+            <p className="text-gray-400">
+              SEMUA HAK DILINDUNGI UNDANG-UNDANG
+            </p>
+          </CardContent>
+        </Card>
         
         {/* Decorative elements */}
         <div className="flex justify-center items-center mt-8 gap-4">
-          <div className="w-8 h-8 bg-red-500 border-4 border-black transform rotate-45"></div>
-          <div className="w-12 h-12 bg-blue-500 border-4 border-black transform -rotate-12"></div>
-          <div className="w-6 h-6 bg-green-500 border-4 border-black transform rotate-12"></div>
-          <div className="w-10 h-10 bg-purple-500 border-4 border-black transform rotate-45"></div>
-          <div className="w-8 h-8 bg-yellow-300 border-4 border-black transform -rotate-12"></div>
+          <div className="w-4 h-4 bg-gradient-to-r from-red-500 to-pink-500 rounded-full animate-pulse"></div>
+          <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-pulse"></div>
+          <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full animate-pulse"></div>
+          <div className="w-5 h-5 bg-gradient-to-r from-purple-500 to-violet-500 rounded-full animate-pulse"></div>
+          <div className="w-4 h-4 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full animate-pulse"></div>
         </div>
       </footer>
     </main>
