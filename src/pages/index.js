@@ -503,7 +503,7 @@ export default function Home() {
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
                 <Button asChild variant="outline" size="lg" className="w-full">
-                  <a href="https://mainapps.nanimeid.xyz/1.0.0/static/apk/app-release.apk" target="_blank" rel="noopener noreferrer">
+                  <a href="https://mainappsv1.nanimeid.xyz/1.0.1/static/apk/app-release.apk" target="_blank" rel="noopener noreferrer">
                    Download Sekarang
                   </a>
                 </Button>
