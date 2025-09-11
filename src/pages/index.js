@@ -496,14 +496,14 @@ export default function Home() {
               <div className="absolute -top-2 -left-2 w-3 h-3 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
               <div className="absolute -bottom-2 -right-2 w-3 h-3 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full animate-pulse"></div>
               <h3 className="text-2xl font-bold text-white mb-2">DOWNLOAD APK</h3>
-              <p className="text-lg text-green-400 mb-4">✅ v1.0.0 Beta 2</p>
+              <p className="text-lg text-green-400 mb-4">✅ v1.0.0 Beta 3 Preview 1</p>
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
                 <Button asChild variant="outline" size="lg" className="w-full">
-                  <a href="https://www.shorturl.at/SZScV" target="_blank" rel="noopener noreferrer">
+                  <a href="https://mainapps.nanimeid.xyz/1.0.0/static/apk/app-release.apk" target="_blank" rel="noopener noreferrer">
                    Download Sekarang
                   </a>
                 </Button>
