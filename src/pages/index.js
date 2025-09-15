@@ -230,6 +230,9 @@ export default function Home() {
             <Button asChild variant="default" size="sm">
               <a href="#download">Download</a>
             </Button>
+            <Button asChild variant="outline" size="sm">
+              <a href="#playstore">Play Store</a>
+            </Button>
             <Button asChild variant="modern" size="sm">
               <a href="#community">Komunitas</a>
             </Button>
@@ -519,6 +522,59 @@ export default function Home() {
               <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-gradient-to-r from-red-400 to-pink-400 rounded-full animate-pulse"></div>
               <h3 className="text-2xl font-bold text-white mb-2">PLAY STORE</h3>
               <p className="text-lg text-gray-400">🚧 Segera Hadir</p>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Play Store Tester Guide */}
+      <section id="playstore" className="max-w-6xl mx-auto mb-20">
+        <Card className="bg-gradient-to-r from-gray-900/50 to-slate-900/50 border-gray-700 backdrop-blur-lg mb-8">
+          <CardHeader>
+            <CardTitle className="text-3xl md:text-4xl text-white text-center">Cara Download via Play Store (Tester)</CardTitle>
+            <CardDescription className="text-center">Ikuti langkah-langkah berikut untuk menjadi tester dan mengunduh aplikasi dari Play Store</CardDescription>
+          </CardHeader>
+        </Card>
+
+        <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg">
+          <CardContent className="p-6 text-gray-300">
+            <ol className="list-decimal pl-6 space-y-3">
+              <li>
+                Gabung ke Google Group NANIMEID terlebih dahulu:
+                {" "}
+                <a
+                  href="https://groups.google.com/g/nanimeid/c/gpnoSoo8Ko4/m/oF2QO96fAgAJ"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-indigo-400 underline hover:text-indigo-300"
+                >
+                  Link Google Group
+                </a>
+              </li>
+              <li>
+                Buka postingan di group tersebut, lalu klik link yang ada pada postingan itu untuk menuju halaman pengujian.
+              </li>
+              <li>
+                Di halaman pengujian, klik tombol <span className="text-white font-semibold">Become tester</span>.
+              </li>
+              <li>
+                Pastikan Anda login ke Google Play Store dengan akun yang sudah bergabung ke Google Group.
+              </li>
+              <li>
+                Buka Play Store dan cari paket berikut: <span className="text-white font-semibold">com.nanime.id</span>.
+                Setelah itu, Anda bisa menginstal aplikasinya seperti biasa.
+              </li>
+            </ol>
+
+            <div className="mt-6">
+              <Card className="bg-gradient-to-br from-blue-900/50 to-indigo-900/50 border-blue-800">
+                <CardContent className="p-4">
+                  <p className="text-sm text-gray-200">
+                    Catatan: Proses propagasi akses tester pada Play Store bisa membutuhkan beberapa menit setelah Anda menekan "Become tester".
+                    Jika aplikasi belum muncul, coba tutup-buka kembali Play Store atau bersihkan cache Play Store.
+                  </p>
+                </CardContent>
+              </Card>
             </div>
           </CardContent>
         </Card>
