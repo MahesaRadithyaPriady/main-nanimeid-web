@@ -1,281 +1,202 @@
 import Head from "next/head";
-import { useEffect } from "react";
 
-// Inline UI Components (duplicated to keep page self-contained as per project style)
-const Button = ({ children, variant = "default", size = "md", className = "", asChild, ...props }) => {
-  const baseClasses = "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background";
-  
-  const variants = {
-    default: "bg-transparent text-white hover:bg-white/10 border border-gray-600",
-    outline: "bg-transparent border border-gray-600 text-white hover:bg-white/10",
-    gradient: "bg-transparent text-white hover:bg-white/10 border border-indigo-500",
-    modern: "bg-transparent text-white hover:bg-white/10 border border-green-500"
-  };
-  
-  const sizes = {
-    sm: "h-9 px-3 text-sm",
-    md: "h-10 py-2 px-4",
-    lg: "h-11 px-8 text-lg"
-  };
-  
-  const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`;
-  
-  if (asChild && props.href) {
-    return <a className={classes} {...props}>{children}</a>;
-  }
-  
-  return <button className={classes} {...props}>{children}</button>;
-};
-
-const Card = ({ children, className = "", ...props }) => (
-  <div className={`rounded-lg border bg-gray-800/50 text-white shadow-lg p-4 ${className}`} {...props}>
+const Svg = ({ children, className = "w-5 h-5", strokeWidth = 2, ...props }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" {...props}>
     {children}
-  </div>
-);
-
-const CardHeader = ({ children, className = "", ...props }) => (
-  <div className={`flex flex-col space-y-2 mb-4 ${className}`} {...props}>
-    {children}
-  </div>
-);
-
-const CardTitle = ({ children, className = "", ...props }) => (
-  <h3 className={`text-xl font-semibold leading-tight ${className}`} {...props}>
-    {children}
-  </h3>
-);
-
-const CardDescription = ({ children, className = "", ...props }) => (
-  <p className={`text-sm text-gray-300 ${className}`} {...props}>
-    {children}
-  </p>
-);
-
-const CardContent = ({ children, className = "", ...props }) => (
-  <div className={`${className}`} {...props}>
-    {children}
-  </div>
-);
-
-const Shield = ({ className = "w-5 h-5", strokeWidth = 2, ...props }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
   </svg>
 );
 
-const Check = ({ className = "w-5 h-5", strokeWidth = 2, ...props }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
-    <polyline points="20,6 9,17 4,12" />
-  </svg>
-);
+const Shield = (p) => <Svg {...p}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></Svg>;
+const Check = (p) => <Svg {...p}><polyline points="20,6 9,17 4,12" /></Svg>;
+const ArrowLeft = (p) => <Svg {...p}><line x1="19" y1="12" x2="5" y2="12" /><polyline points="12,19 5,12 12,5" /></Svg>;
+const Mail = (p) => <Svg {...p}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></Svg>;
+const Sparkles = (p) => <Svg {...p}><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z" /><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z" /></Svg>;
+
+const sections = [
+  {
+    title: "Ringkasan",
+    body: (
+      <>
+        <p>
+          NANIMEID berkomitmen untuk melindungi privasi Anda. Kebijakan ini menjelaskan
+          jenis data apa yang kami proses, bagaimana kami menggunakannya, dan pilihan yang Anda miliki.
+        </p>
+        <ul className="space-y-2">
+          {["Kami tidak menjual data pengguna.", "Kami tidak meminta data pribadi sensitif.", "Data teknis anonim dapat diproses untuk meningkatkan kualitas layanan."].map((li) => (
+            <li key={li} className="flex gap-2"><Check className="w-4 h-4 text-brand-400 shrink-0 mt-1" /> {li}</li>
+          ))}
+        </ul>
+      </>
+    ),
+  },
+  {
+    title: "Informasi yang Kami Kumpulkan",
+    body: (
+      <>
+        <p>
+          Secara default, aplikasi tidak mengumpulkan informasi yang mengidentifikasi Anda secara langsung
+          (seperti nama, email, atau nomor telepon) kecuali Anda secara sukarela memberikannya melalui fitur tertentu.
+        </p>
+        <p>Kami dapat memproses data teknis anonim, seperti:</p>
+        <ul className="list-disc pl-6 space-y-1">
+          <li>Data perangkat (model, versi OS, bahasa, negara).</li>
+          <li>Log penggunaan aplikasi dan diagnosa crash.</li>
+          <li>Informasi performa untuk perbaikan dan pengujian fitur.</li>
+        </ul>
+      </>
+    ),
+  },
+  {
+    title: "Cara Kami Menggunakan Data",
+    body: (
+      <ul className="list-disc pl-6 space-y-1">
+        <li>Meningkatkan stabilitas, keamanan, dan performa aplikasi.</li>
+        <li>Menganalisis fitur yang paling sering digunakan untuk prioritas pengembangan.</li>
+        <li>Menangani bug, crash, dan dukungan teknis.</li>
+      </ul>
+    ),
+  },
+  {
+    title: "Penyimpanan & Keamanan",
+    body: (
+      <p>
+        Kami menerapkan langkah-langkah keamanan yang wajar untuk melindungi data. Data teknis disimpan
+        hanya selama diperlukan untuk tujuan yang dijelaskan dan kemudian dihapus atau dianonimkan.
+      </p>
+    ),
+  },
+  {
+    title: "Berbagi Informasi",
+    body: (
+      <p>
+        Kami tidak menjual atau menyewakan data pengguna. Kami dapat berbagi data teknis anonim dengan penyedia layanan
+        yang membantu kami menjalankan dan mengembangkan aplikasi (misal analitik atau pelaporan crash) sesuai perjanjian pemrosesan data.
+      </p>
+    ),
+  },
+  {
+    title: "Hak Pengguna",
+    body: (
+      <p>
+        Anda dapat meminta informasi, koreksi, atau penghapusan data yang Anda berikan secara sukarela (jika ada).
+        Hubungi kami melalui kanal resmi di bawah ini.
+      </p>
+    ),
+  },
+  {
+    title: "Anak di Bawah Umur",
+    body: (
+      <p>
+        Aplikasi tidak ditujukan untuk anak di bawah 13 tahun. Kami tidak dengan sengaja mengumpulkan data pribadi anak.
+        Jika Anda adalah orang tua/wali dan mengetahui anak memberikan data kepada kami, hubungi kami untuk penghapusan.
+      </p>
+    ),
+  },
+  {
+    title: "Perubahan Kebijakan",
+    body: (
+      <p>
+        Kami dapat memperbarui Kebijakan Privasi ini dari waktu ke waktu. Perubahan akan dipublikasikan di halaman ini
+        beserta tanggal pembaruan terbaru di bagian atas dokumen.
+      </p>
+    ),
+  },
+];
 
 export default function PrivacyPage() {
-  // Smooth anchor scroll fallback if needed (same behavior as index page style)
-  useEffect(() => {
-    if (typeof document === 'undefined' || 'scrollBehavior' in document.documentElement.style) return;
-    const onClick = (e) => {
-      const anchor = e.target.closest('a[href^="#"]');
-      if (!anchor) return;
-      const href = anchor.getAttribute('href');
-      if (!href) return;
-      const target = document.querySelector(href);
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    };
-    document.addEventListener('click', onClick);
-    return () => document.removeEventListener('click', onClick);
-  }, []);
-
   return (
     <>
       <Head>
         <title>Kebijakan Privasi — NANIMEID</title>
         <meta name="description" content="Kebijakan Privasi NANIMEID untuk publikasi di Google Play Store." />
+        <link rel="icon" href="/icon.png" />
       </Head>
 
-      <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black p-6 font-sans">
-        {/* Top Nav */}
-        <nav className="max-w-6xl mx-auto flex items-center justify-between mb-8">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg shadow-lg"></div>
-            <span className="text-xl font-bold tracking-tight text-white">NANIMEID</span>
-          </div>
-          <div className="hidden sm:flex items-center gap-3">
-            <Button asChild variant="outline" size="sm">
-              <a href="/">Beranda</a>
-            </Button>
-            <Button asChild variant="default" size="sm">
-              <a href="#kontak">Kontak</a>
-            </Button>
-          </div>
-        </nav>
+      <main className="min-h-screen bg-night-950 text-[#f5f2f3] font-sans overflow-x-hidden">
+        {/* ---------- Navbar ---------- */}
+        <header className="fixed top-0 inset-x-0 z-50">
+          <nav className="max-w-6xl mx-auto mt-4 px-4">
+            <div className="glass rounded-2xl px-5 py-3 flex items-center justify-between">
+              <a href="/" className="flex items-center gap-3">
+                <img src="/icon.png" alt="NanimeID" className="w-9 h-9 drop-shadow-[0_4px_12px_rgba(113,139,255,0.35)]" />
+                <span className="font-display text-lg tracking-tight">NANIMEID</span>
+              </a>
+              <a href="/" className="inline-flex items-center gap-2 text-sm font-bold bg-brand-500 rounded-xl px-4 py-2 hover:bg-brand-600 transition-colors shadow-lg shadow-brand-500/25">
+                <ArrowLeft className="w-4 h-4" /> Beranda
+              </a>
+            </div>
+          </nav>
+        </header>
 
-        {/* Hero */}
-        <section className="text-center mb-12 max-w-6xl mx-auto">
-          <div className="relative inline-block">
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Kebijakan Privasi
+        {/* ---------- Hero ---------- */}
+        <section className="relative pt-36 pb-16 px-6">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-brand-500/20 rounded-full blur-[140px] animate-blob" />
+            <div className="absolute top-20 right-0 w-[420px] h-[420px] bg-brand-700/15 rounded-full blur-[140px] animate-blob" style={{ animationDelay: "-4s" }} />
+            <div className="absolute inset-0 bg-grid [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />
+          </div>
+
+          <div className="relative text-center max-w-2xl mx-auto">
+            <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-brand-300 bg-brand-500/10 border border-brand-500/25 rounded-full px-4 py-1.5 mb-6">
+              <Sparkles className="w-3.5 h-3.5" /> Legal
+            </span>
+            <h1 className="font-display text-5xl md:text-6xl tracking-tight mb-5">
+              Kebijakan <span className="text-gradient">Privasi</span>
             </h1>
-            <div className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-pink-500 to-red-500 rounded-full animate-pulse"></div>
-            <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-pulse"></div>
+            <p className="text-[#a7a2a7] text-lg">
+              Terakhir diperbarui: <span className="text-white font-semibold">15 September 2025</span>
+            </p>
           </div>
-
-          <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg max-w-2xl mx-auto mt-6">
-            <CardContent className="p-6">
-              <p className="text-gray-300">
-                Terakhir diperbarui: <span className="text-white font-semibold">15 September 2025</span>
-              </p>
-            </CardContent>
-          </Card>
         </section>
 
-        {/* Policy Content */}
-        <section className="max-w-3xl mx-auto space-y-6 mb-20">
-          <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-white flex items-center gap-2"><Shield className="w-6 h-6" />Ringkasan</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-3">
-              <p>
-                NANIMEID berkomitmen untuk melindungi privasi Anda. Kebijakan ini menjelaskan
-                jenis data apa yang kami proses, bagaimana kami menggunakannya, dan pilihan yang Anda miliki.
-              </p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Kami tidak menjual data pengguna.</li>
-                <li>Kami tidak meminta data pribadi sensitif.</li>
-                <li>Data teknis anonim dapat diproses untuk meningkatkan kualitas layanan.</li>
-              </ul>
-            </CardContent>
-          </Card>
+        {/* ---------- Policy Content ---------- */}
+        <section className="relative max-w-3xl mx-auto px-6 pb-24 space-y-5">
+          {sections.map((s, i) => (
+            <div key={s.title} className="glass rounded-3xl p-7 hover:bg-night-800 hover:border-night-600 transition-colors">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-10 h-10 shrink-0 rounded-xl bg-brand-500/15 border border-brand-500/25 flex items-center justify-center text-brand-300 font-display">
+                  {String(i + 1).padStart(2, "0")}
+                </div>
+                <h2 className="text-xl font-extrabold">{s.title}</h2>
+              </div>
+              <div className="text-[#a7a2a7] leading-relaxed space-y-3">{s.body}</div>
+            </div>
+          ))}
 
-          <Card className="bg-gradient-to-br from-blue-900/50 to-indigo-900/50 border-blue-800 backdrop-blur-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-white">Informasi yang Kami Kumpulkan</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-3">
-              <p>
-                Secara default, aplikasi tidak mengumpulkan informasi yang mengidentifikasi Anda secara langsung
-                (seperti nama, email, atau nomor telepon) kecuali Anda secara sukarela memberikannya melalui fitur tertentu.
-              </p>
-              <p>Kami dapat memproses data teknis anonim, seperti:</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Data perangkat (model, versi OS, bahasa, negara).</li>
-                <li>Log penggunaan aplikasi dan diagnosa crash.</li>
-                <li>Informasi performa untuk perbaikan dan pengujian fitur.</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-green-900/50 to-emerald-900/50 border-green-800 backdrop-blur-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-white">Cara Kami Menggunakan Data</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-2">
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Meningkatkan stabilitas, keamanan, dan performa aplikasi.</li>
-                <li>Menganalisis fitur yang paling sering digunakan untuk prioritas pengembangan.</li>
-                <li>Menangani bug, crash, dan dukungan teknis.</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-yellow-900/50 to-orange-900/50 border-yellow-800 backdrop-blur-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-white">Penyimpanan & Keamanan</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-2">
-              <p>
-                Kami menerapkan langkah-langkah keamanan yang wajar untuk melindungi data. Data teknis disimpan
-                hanya selama diperlukan untuk tujuan yang dijelaskan dan kemudian dihapus atau dianonimkan.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-purple-900/50 to-violet-900/50 border-purple-800 backdrop-blur-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-white">Berbagi Informasi</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-2">
-              <p>
-                Kami tidak menjual atau menyewakan data pengguna. Kami dapat berbagi data teknis anonim dengan penyedia layanan
-                yang membantu kami menjalankan dan mengembangkan aplikasi (misal analitik atau pelaporan crash) sesuai perjanjian pemrosesan data.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-white">Hak Pengguna</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-2">
-              <p>
-                Anda dapat meminta informasi, koreksi, atau penghapusan data yang Anda berikan secara sukarela (jika ada).
-                Hubungi kami melalui kanal resmi di bawah ini.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-red-900/50 to-pink-900/50 border-red-800 backdrop-blur-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-white">Anak di Bawah Umur</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-2">
-              <p>
-                Aplikasi tidak ditujukan untuk anak di bawah 13 tahun. Kami tidak dengan sengaja mengumpulkan data pribadi anak.
-                Jika Anda adalah orang tua/wali dan mengetahui anak memberikan data kepada kami, hubungi kami untuk penghapusan.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-white">Perubahan Kebijakan</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-2">
-              <p>
-                Kami dapat memperbarui Kebijakan Privasi ini dari waktu ke waktu. Perubahan akan dipublikasikan di halaman ini
-                beserta tanggal pembaruan terbaru di bagian atas dokumen.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card id="kontak" className="bg-gray-900/50 border-gray-700 backdrop-blur-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-white">Kontak</CardTitle>
-              <CardDescription>Hubungi kami jika ada pertanyaan terkait privasi.</CardDescription>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-2">
+          {/* Kontak */}
+          <div id="kontak" className="glass rounded-3xl p-8 border-brand-500/30 scroll-mt-24">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-10 h-10 shrink-0 rounded-xl bg-brand-500 flex items-center justify-center shadow-lg shadow-brand-500/25">
+                <Mail className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h2 className="text-xl font-extrabold">Kontak</h2>
+                <p className="text-sm text-[#a7a2a7]">Hubungi kami jika ada pertanyaan terkait privasi.</p>
+              </div>
+            </div>
+            <div className="text-[#a7a2a7] leading-relaxed space-y-3">
               <p>
                 Kanal resmi: Grup WhatsApp Komunitas NANIMEID. Tautan tersedia di halaman beranda bagian "Komunitas".
               </p>
               <p>
                 Jika Anda membutuhkan saluran kontak tambahan (mis. email), silakan hubungi kami melalui komunitas untuk mendapatkan alamat resmi terbaru.
               </p>
-              <div className="pt-2">
-                <Button asChild variant="modern" size="md">
-                  <a href="/">Kembali ke Beranda</a>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+            <a href="/" className="mt-6 inline-flex items-center gap-2 bg-brand-500 rounded-xl px-6 py-3 font-bold text-sm hover:bg-brand-600 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-brand-500/25">
+              <ArrowLeft className="w-4 h-4" /> Kembali ke Beranda
+            </a>
+          </div>
         </section>
 
-        {/* Footer */}
-        <footer className="w-full border-t border-gray-700 pt-8">
-          <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg max-w-2xl mx-auto text-center">
-            <CardContent className="p-6">
-              <p className="font-bold text-lg text-white mb-2">© 2025 NANIMEID</p>
-              <p className="text-gray-400">SEMUA HAK DILINDUNGI UNDANG-UNDANG</p>
-            </CardContent>
-          </Card>
-          <div className="flex justify-center items-center mt-8 gap-4">
-            <div className="w-4 h-4 bg-gradient-to-r from-red-500 to-pink-500 rounded-full animate-pulse"></div>
-            <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-pulse"></div>
-            <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full animate-pulse"></div>
-            <div className="w-5 h-5 bg-gradient-to-r from-purple-500 to-violet-500 rounded-full animate-pulse"></div>
-            <div className="w-4 h-4 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full animate-pulse"></div>
+        {/* ---------- Footer ---------- */}
+        <footer className="border-t border-night-700 py-10 px-6">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <img src="/icon.png" alt="NanimeID" className="w-8 h-8" />
+              <span className="font-display">NANIMEID</span>
+            </div>
+            <p className="text-sm text-[#a7a2a7]">© 2025 NANIMEID — Semua hak dilindungi.</p>
+            <a href="/privacy" className="text-sm text-[#a7a2a7] hover:text-white transition-colors">Kebijakan Privasi</a>
           </div>
         </footer>
       </main>

@@ -1,706 +1,403 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-// Inline UI Components
-const Button = ({ children, variant = "default", size = "md", className = "", asChild, ...props }) => {
-  const baseClasses = "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background";
-  
-  const variants = {
-    default: "bg-transparent text-white hover:bg-white/10 border border-gray-600",
-    outline: "bg-transparent border border-gray-600 text-white hover:bg-white/10",
-    gradient: "bg-transparent text-white hover:bg-white/10 border border-indigo-500",
-    modern: "bg-transparent text-white hover:bg-white/10 border border-green-500"
-  };
-  
-  const sizes = {
-    sm: "h-9 px-3 text-sm",
-    md: "h-10 py-2 px-4",
-    lg: "h-11 px-8 text-lg"
-  };
-  
-  const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`;
-  
-  if (asChild && props.href) {
-    return <a className={classes} {...props}>{children}</a>;
-  }
-  
-  return <button className={classes} {...props}>{children}</button>;
-};
-
-const Card = ({ children, className = "", ...props }) => (
-  <div className={`rounded-lg border bg-gray-800/50 text-white shadow-lg p-4 ${className}`} {...props}>
+/* ---------------- Icons ---------------- */
+const Svg = ({ children, className = "w-5 h-5", strokeWidth = 2, fill = "none", ...props }) => (
+  <svg className={className} fill={fill} stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" {...props}>
     {children}
-  </div>
+  </svg>
 );
 
-const CardHeader = ({ children, className = "", ...props }) => (
-  <div className={`flex flex-col space-y-2 mb-4 ${className}`} {...props}>
-    {children}
-  </div>
+const Play = (p) => <Svg {...p}><polygon points="6,3 20,12 6,21" fill="currentColor" stroke="none" /></Svg>;
+const Download = (p) => <Svg {...p}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7,10 12,15 17,10" /><line x1="12" y1="15" x2="12" y2="3" /></Svg>;
+const Smartphone = (p) => <Svg {...p}><rect x="5" y="2" width="14" height="20" rx="2" ry="2" /><line x1="12" y1="18" x2="12.01" y2="18" /></Svg>;
+
+const Zap = (p) => <Svg {...p}><polygon points="13,2 3,14 12,14 11,22 21,10 12,10" /></Svg>;
+const Shield = (p) => <Svg {...p}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></Svg>;
+const Check = (p) => <Svg {...p}><polyline points="20,6 9,17 4,12" /></Svg>;
+const ArrowRight = (p) => <Svg {...p}><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12,5 19,12 12,19" /></Svg>;
+const Tv = (p) => <Svg {...p}><rect x="2" y="7" width="20" height="15" rx="2" /><polyline points="17,2 12,7 7,2" /></Svg>;
+const Bookmark = (p) => <Svg {...p}><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></Svg>;
+const Bell = (p) => <Svg {...p}><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></Svg>;
+const Sparkles = (p) => <Svg {...p}><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z" /><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z" /></Svg>;
+const Menu = (p) => <Svg {...p}><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></Svg>;
+const XIcon = (p) => <Svg {...p}><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></Svg>;
+const AlertTriangle = (p) => <Svg {...p}><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></Svg>;
+
+const GooglePlay = ({ className = "w-6 h-6" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M3.6 2.3c-.34.36-.55.9-.55 1.55v16.3c0 .65.21 1.19.55 1.55l.07.06 9.14-9.2v-.22L3.67 2.24l-.07.06z" />
+    <path d="M16.36 16.29l-3.55-3.56L3.6 21.94c.6.64 1.6.72 2.72.07l10.04-5.72z" />
+    <path d="M20.5 10.5l-2.88-1.64-3.95 3.98 3.98 3.99 2.9-1.65c1.67-.95 1.67-2.5-.05-3.68z" />
+    <path d="M16.36 7.4L6.32 1.68c-1.12-.65-2.12-.57-2.72.07l9.21 9.21 3.55-3.56z" />
+  </svg>
 );
 
-const CardTitle = ({ children, className = "", ...props }) => (
-  <h3 className={`text-xl font-semibold leading-tight ${className}`} {...props}>
-    {children}
-  </h3>
+const WindowsIcon = ({ className = "w-6 h-6" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M3 5.5l7.5-1v7.5H3V5.5zm0 13l7.5 1v-7.5H3v6.5zm8.5 1.1l9.5 1.4v-8.9h-9.5v7.5zm0-16.1v7.6H21V3l-9.5 1.4z" />
+  </svg>
 );
 
-const CardDescription = ({ children, className = "", ...props }) => (
-  <p className={`text-sm text-gray-300 ${className}`} {...props}>
-    {children}
-  </p>
-);
-
-const CardContent = ({ children, className = "", ...props }) => (
-  <div className={`${className}`} {...props}>
-    {children}
-  </div>
-);
-
-const Badge = ({ children, variant = "default", className = "", ...props }) => {
-  const variants = {
-    default: "bg-primary text-primary-foreground hover:bg-primary/80",
-    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-  };
-  
+/* ---------------- Helpers ---------------- */
+const Reveal = ({ children, className = "", delay = 0 }) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      { threshold: 0.12 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
   return (
-    <div className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 ${variants[variant]} ${className}`} {...props}>
+    <div
+      ref={ref}
+      style={{ transitionDelay: `${delay}ms` }}
+      className={`transition-all duration-700 ease-out ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"} ${className}`}
+    >
       {children}
     </div>
   );
 };
 
-// Simple motion wrapper
-const motion = {
-  div: ({ children, whileHover, whileTap, transition, ...props }) => (
-    <div 
-      className="transition-transform hover:scale-105 active:scale-95" 
-      {...props}
-    >
-      {children}
-    </div>
-  )
-};
-
-// Lucide React Icons (simplified SVG versions)
-const Play = ({ className = "w-5 h-5", strokeWidth = 2, ...props }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
-    <polygon points="5,3 19,12 5,21" />
-  </svg>
+const SectionHeading = ({ eyebrow, title, sub }) => (
+  <div className="text-center max-w-2xl mx-auto mb-14">
+    <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-brand-300 bg-brand-500/10 border border-brand-500/25 rounded-full px-4 py-1.5 mb-5">
+      <Sparkles className="w-3.5 h-3.5" /> {eyebrow}
+    </span>
+    <h2 className="font-display text-4xl md:text-5xl tracking-tight text-white mb-4">{title}</h2>
+    {sub && <p className="text-[#a7a2a7] text-lg">{sub}</p>}
+  </div>
 );
 
-const Download = ({ className = "w-5 h-5", strokeWidth = 2, ...props }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
-    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-    <polyline points="7,10 12,15 17,10" />
-    <line x1="12" y1="15" x2="12" y2="3" />
-  </svg>
-);
-
-const Star = ({ className = "w-5 h-5", strokeWidth = 2, fill, ...props }) => (
-  <svg className={className} fill={fill || "none"} stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
-    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
-  </svg>
-);
-
-const Smartphone = ({ className = "w-5 h-5", strokeWidth = 2, ...props }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
-    <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
-    <line x1="12" y1="18" x2="12.01" y2="18" />
-  </svg>
-);
-
-const Zap = ({ className = "w-5 h-5", strokeWidth = 2, ...props }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
-    <polygon points="13,2 3,14 12,14 11,22 21,10 12,10" />
-  </svg>
-);
-
-const Users = ({ className = "w-5 h-5", strokeWidth = 2, ...props }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
-    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-    <circle cx="9" cy="7" r="4" />
-    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-  </svg>
-);
-
-const Clock = ({ className = "w-5 h-5", strokeWidth = 2, ...props }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
-    <circle cx="12" cy="12" r="10" />
-    <polyline points="12,6 12,12 16,14" />
-  </svg>
-);
-
-const Shield = ({ className = "w-5 h-5", strokeWidth = 2, ...props }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-  </svg>
-);
-
-const Check = ({ className = "w-5 h-5", strokeWidth = 2, ...props }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} {...props}>
-    <polyline points="20,6 9,17 4,12" />
-  </svg>
-);
-
+/* ---------------- Page ---------------- */
 export default function Home() {
-  // Countdown to September 27 (local time). If already passed this year, target next year.
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  const [released, setReleased] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const computeTarget = () => {
-      const now = new Date();
-      const year = now.getFullYear();
-      const targetThisYear = new Date(year, 8, 27, 0, 0, 0); // Month is 0-indexed: 8 = September
-      return targetThisYear.getTime() <= now.getTime()
-        ? new Date(year + 1, 8, 27, 0, 0, 0)
-        : targetThisYear;
-    };
+  const navLinks = [
+    { label: "Fitur", href: "#features" },
+    { label: "Download", href: "#download" },
+    { label: "Komunitas", href: "#community" },
+  ];
 
-    let targetDate = computeTarget();
+  const features = [
+    { icon: Shield, title: "Bebas Iklan", desc: "Nonton anime tanpa gangguan iklan yang menyebalkan. Fokus penuh ke cerita." },
+    { icon: Zap, title: "Update Harian", desc: "Episode terbaru tayang hampir bersamaan dengan rilis di Jepang." },
+    { icon: Bookmark, title: "Favorit & History", desc: "Simpan anime favorit dan lanjutkan tontonan dari episode terakhir." },
+    { icon: Tv, title: "Kualitas HD", desc: "Streaming lancar hingga resolusi tinggi, hemat kuota dengan multi-server." },
+    { icon: Bell, title: "Notifikasi Episode", desc: "Dapatkan kabar begitu episode anime favoritmu rilis." },
+    { icon: Smartphone, title: "UI Modern", desc: "Antarmuka bersih dan cepat yang nyaman dipakai siapa saja." },
+  ];
 
-    const tick = () => {
-      const diff = targetDate.getTime() - Date.now();
-      if (diff <= 0) {
-        setReleased(true);
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-        return;
-      }
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
-      setTimeLeft({ days, hours, minutes, seconds });
-    };
-
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  // JS fallback for browsers tanpa CSS smooth-scroll
-  useEffect(() => {
-    // Jika browser sudah support CSS smooth, tidak perlu JS
-    if (typeof document === 'undefined' || 'scrollBehavior' in document.documentElement.style) return;
-
-    const onClick = (e) => {
-      const anchor = e.target.closest('a[href^="#"]');
-      if (!anchor) return;
-      const href = anchor.getAttribute('href');
-      if (!href) return;
-      const target = document.querySelector(href);
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    };
-
-    document.addEventListener('click', onClick);
-    return () => document.removeEventListener('click', onClick);
-  }, []);
+  const marqueeItems = ["BEBAS IKLAN", "UPDATE HARIAN", "KUALITAS HD", "100% GRATIS", "FAVORIT & HISTORY", "UI MODERN", "MULTI SERVER"];
 
   return (
     <>
       <Head>
         <title>NANIMEID — Streaming Anime Terbaik</title>
-        <meta
-          name="description"
-          content="Nonton dan download anime favoritmu dengan UI modern, bebas iklan, dan update harian."
-        />
+        <meta name="description" content="Nonton dan download anime favoritmu dengan UI modern, bebas iklan, dan update harian." />
+        <link rel="icon" href="/icon.png" />
       </Head>
-      <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black p-6 font-sans">
-        {/* Top Nav */}
-        <nav className="max-w-6xl mx-auto flex items-center justify-between mb-8">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg shadow-lg"></div>
-            <span className="text-xl font-bold tracking-tight text-white">NANIMEID</span>
-          </div>
-          <div className="hidden sm:flex items-center gap-3">
-            <Button asChild variant="gradient" size="sm">
-              <a href="#countdown">Rilis</a>
-            </Button>
-            <Button asChild variant="outline" size="sm">
-              <a href="#features">Fitur</a>
-            </Button>
-            <Button asChild variant="outline" size="sm">
-              <a href="#about">Tentang</a>
-            </Button>
-            <Button asChild variant="default" size="sm">
-              <a href="#download">Download</a>
-            </Button>
-            <Button asChild variant="outline" size="sm">
-              <a href="#playstore">Play Store</a>
-            </Button>
-            <Button asChild variant="modern" size="sm">
-              <a href="#community">Komunitas</a>
-            </Button>
-          </div>
-        </nav>
-      
-      {/* Hero Section */}
-      <section className="text-center mb-20 max-w-6xl mx-auto">
-        <div className="relative inline-block">
-          <h1 className="text-6xl md:text-8xl font-bold text-white mb-6 tracking-tight bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-            NANIMEID
-          </h1>
-          <div className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-pink-500 to-red-500 rounded-full animate-pulse"></div>
-          <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-pulse"></div>
-        </div>
-        
-        <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg max-w-2xl mx-auto">
-          <CardContent className="p-6">
-            <p className="text-xl md:text-2xl font-bold text-center text-white">
-              STREAMING ANIME TERBAIK<br/>
-              <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">TANPA RIBET!</span>
-            </p>
-          </CardContent>
-        </Card>
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400, damping: 17 }}
-          >
-            <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6">
-              <a href="#download">
-               Mulai Nonton
+
+      <main className="min-h-screen bg-night-950 text-[#f5f2f3] font-sans overflow-x-hidden">
+        {/* ---------- Navbar ---------- */}
+        <header className="fixed top-0 inset-x-0 z-50">
+          <nav className="max-w-6xl mx-auto mt-4 px-4">
+            <div className="glass rounded-2xl px-5 py-3 flex items-center justify-between">
+              <a href="#" className="flex items-center gap-3">
+                <img src="/icon.png" alt="NanimeID" className="w-9 h-9 drop-shadow-[0_4px_12px_rgba(113,139,255,0.35)]" />
+                <span className="font-display text-lg tracking-tight">NANIMEID</span>
               </a>
-            </Button>
-          </motion.div>
-          <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6 border-gray-600 text-white hover:bg-gray-800">
-            <a href="#features">
-              Lihat Fitur
-            </a>
-          </Button>
-        </div>
-      </section>
 
-      {/* About Section */}
-      <section id="about" className="text-center mb-20 max-w-6xl mx-auto">
-        <div className="relative inline-block mb-8">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-            TENTANG NANIMEID
-          </h2>
-          <div className="absolute -top-2 -right-2 w-3 h-3 bg-gradient-to-r from-red-500 to-pink-500 rounded-full animate-pulse"></div>
-          <div className="absolute -bottom-2 -left-2 w-2 h-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-pulse"></div>
-        </div>
-
-        <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg max-w-3xl mx-auto">
-          <CardContent className="p-8">
-            <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
-              Aplikasi NANIMEID adalah platform streaming anime yang fokus pada pengalaman nonton yang cepat, bebas iklan mengganggu, dan mudah digunakan. Kami berkomitmen menghadirkan update anime terbaru, UI modern, serta fitur favorit untuk menemani harimu.
-            </p>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Struktur Organisasi */}
-      <section className="max-w-4xl mx-auto mb-20">
-        <Card className="bg-gradient-to-r from-red-900/50 to-pink-900/50 border-red-800 backdrop-blur-lg mb-8">
-          <CardHeader>
-            <CardTitle className="text-3xl md:text-4xl text-white text-center">Struktur Organisasi</CardTitle>
-          </CardHeader>
-        </Card>
-
-        <div className="space-y-6">
-          <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-white">Founder</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 mb-4">KIRA adalah Founder NANIMEID sejak 2025 dan terus memimpin pengembangan serta visi platform hingga sekarang.</p>
-              <p className="text-gray-300">Fokus pada pengalaman nonton yang cepat, aman, dan bebas gangguan, KIRA mendorong inovasi fitur dan kualitas layanan untuk komunitas anime Indonesia.</p>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Visi & Misi */}
-      <section className="max-w-6xl mx-auto mb-20">
-        <Card className="bg-gradient-to-r from-purple-900/50 to-indigo-900/50 border-purple-800 backdrop-blur-lg mb-8">
-          <CardHeader>
-            <CardTitle className="text-3xl md:text-4xl text-white text-center">Visi & Misi</CardTitle>
-          </CardHeader>
-        </Card>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-white">Visi</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300">
-                Menjadi platform streaming anime pilihan utama di Indonesia dengan pengalaman nonton yang cepat, aman, dan menyenangkan untuk semua kalangan.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-green-900/50 to-emerald-900/50 border-green-800 backdrop-blur-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-white">Misi</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="list-disc pl-6 text-gray-300 space-y-2">
-                <li>Menyediakan update anime terbaru secara konsisten.</li>
-                <li>Menghadirkan antarmuka modern yang mudah digunakan.</li>
-                <li>Meminimalkan iklan mengganggu demi kenyamanan pengguna.</li>
-                <li>Mendukung komunitas anime lokal melalui konten berkualitas.</li>
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-      {/* Countdown Section */}
-      <section id="countdown" className="mb-20 max-w-6xl mx-auto">
-        <Card className="bg-gradient-to-r from-yellow-900/50 to-orange-900/50 border-yellow-800 backdrop-blur-lg mb-8">
-          <CardHeader className="text-center">
-            <CardTitle className="text-3xl md:text-4xl text-white mb-2">
-              Menuju Rilis 27 September
-            </CardTitle>
-            <CardDescription className="text-gray-300 text-lg">Tandai kalendermu dan siap-siap nonton!</CardDescription>
-          </CardHeader>
-        </Card>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
-          <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg">
-            <CardContent className="p-6 text-center">
-              <div className="text-4xl md:text-5xl font-bold text-white">{timeLeft.days}</div>
-              <div className="text-sm md:text-base font-medium uppercase text-gray-400">Hari</div>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-blue-900/50 to-indigo-900/50 border-blue-800 backdrop-blur-lg">
-            <CardContent className="p-6 text-center">
-              <div className="text-4xl md:text-5xl font-bold text-white">{String(timeLeft.hours).padStart(2, '0')}</div>
-              <div className="text-sm md:text-base font-medium uppercase text-gray-300">Jam</div>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-green-900/50 to-emerald-900/50 border-green-800 backdrop-blur-lg">
-            <CardContent className="p-6 text-center">
-              <div className="text-4xl md:text-5xl font-bold text-white">{String(timeLeft.minutes).padStart(2, '0')}</div>
-              <div className="text-sm md:text-base font-medium uppercase text-gray-300">Menit</div>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-red-900/50 to-pink-900/50 border-red-800 backdrop-blur-lg">
-            <CardContent className="p-6 text-center">
-              <div className="text-4xl md:text-5xl font-bold text-white">{String(timeLeft.seconds).padStart(2, '0')}</div>
-              <div className="text-sm md:text-base font-medium uppercase text-gray-300">Detik</div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="text-center mt-8">
-          {released ? (
-            <Button asChild variant="gradient" size="lg" className="text-xl px-8 py-6">
-              <a href="#download">
-                Rilis hari ini! Download sekarang
-              </a>
-            </Button>
-          ) : (
-            <Badge variant="secondary" className="text-lg px-6 py-3 bg-gray-800 text-gray-300 border-gray-600">
-              Hitung mundur dimulai...
-            </Badge>
-          )}
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section id="features" className="mb-20 max-w-6xl mx-auto">
-        <Card className="bg-gradient-to-r from-red-900/50 to-pink-900/50 border-red-800 backdrop-blur-lg mb-8">
-          <CardHeader>
-            <CardTitle className="text-4xl md:text-5xl text-white text-center">
-              FITUR KEREN!
-            </CardTitle>
-          </CardHeader>
-        </Card>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg">
-            <CardContent className="p-6">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg mr-4 flex items-center justify-center">
-                  <Shield className="w-6 h-6 text-white" strokeWidth={2} />
-                </div>
-                <CardTitle className="text-white">BEBAS IKLAN</CardTitle>
-              </div>
-              <p className="text-gray-300">Nonton anime tanpa gangguan iklan yang menyebalkan!</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-gradient-to-br from-blue-900/50 to-indigo-900/50 border-blue-800 backdrop-blur-lg">
-            <CardContent className="p-6">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg mr-4 flex items-center justify-center">
-                  <Zap className="w-6 h-6 text-white" strokeWidth={2} />
-                </div>
-                <CardTitle className="text-white">UPDATE HARIAN</CardTitle>
-              </div>
-              <p className="text-gray-300">Episode terbaru langsung tersedia setiap hari!</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-gradient-to-br from-green-900/50 to-emerald-900/50 border-green-800 backdrop-blur-lg">
-            <CardContent className="p-6">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-pink-500 rounded-lg mr-4 flex items-center justify-center">
-                  <Star className="w-6 h-6 text-white" strokeWidth={2} fill="white" />
-                </div>
-                <CardTitle className="text-white">DAFTAR FAVORIT</CardTitle>
-              </div>
-              <p className="text-gray-300">Simpan anime favorit & track history tontonanmu!</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-gradient-to-br from-purple-900/50 to-violet-900/50 border-purple-800 backdrop-blur-lg">
-            <CardContent className="p-6">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg mr-4 flex items-center justify-center">
-                  <Smartphone className="w-6 h-6 text-white" strokeWidth={2} />
-                </div>
-                <CardTitle className="text-white">UI MODERN</CardTitle>
-              </div>
-              <p className="text-gray-300">Interface keren yang mudah digunakan siapa aja!</p>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Requirements Section */}
-      <section className="mb-20 text-center max-w-6xl mx-auto">
-        <Card className="bg-gradient-to-r from-gray-900/50 to-slate-900/50 border-gray-700 backdrop-blur-lg max-w-2xl mx-auto">
-          <CardHeader>
-            <CardTitle className="text-3xl md:text-4xl text-white mb-4">
-              SYARAT DOWNLOAD
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-center">
-              <Smartphone className="w-6 h-6 mr-3 text-indigo-400" strokeWidth={2} />
-              <p className="text-xl text-gray-300">Android 5.0 ke atas</p>
-            </div>
-            <div className="flex items-center justify-center">
-              <Download className="w-6 h-6 mr-3 text-green-400" strokeWidth={2} />
-              <p className="text-xl text-gray-300">Minimal 100MB storage</p>
-            </div>
-            <div className="flex items-center justify-center">
-              <Zap className="w-6 h-6 mr-3 text-yellow-400" strokeWidth={2} />
-              <p className="text-xl text-gray-300">Koneksi internet stabil</p>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Download Buttons */}
-      <section id="download" className="flex flex-col lg:flex-row gap-12 mb-20 justify-center items-center max-w-6xl mx-auto">
-        <Card className="bg-gradient-to-br from-red-900/50 to-pink-900/50 border-red-800 backdrop-blur-lg hover:shadow-xl transition-all duration-300">
-          <CardContent className="p-8 text-center">
-            <div className="relative">
-              <div className="absolute -top-2 -left-2 w-3 h-3 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
-              <div className="absolute -bottom-2 -right-2 w-3 h-3 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full animate-pulse"></div>
-              <h3 className="text-2xl font-bold text-white mb-2">DOWNLOAD APK</h3>
-              <p className="text-lg text-green-400 mb-4">✅ v1.0.0 Beta 2</p>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              >
-                <Button asChild variant="outline" size="lg" className="w-full">
-                  <a href="https://www.shorturl.at/SZScV" target="_blank" rel="noopener noreferrer">
-                   Download Sekarang
+              <div className="hidden md:flex items-center gap-1">
+                {navLinks.map((l) => (
+                  <a key={l.href} href={l.href} className="px-4 py-2 text-sm text-[#a7a2a7] hover:text-white rounded-lg hover:bg-white/5 transition-colors">
+                    {l.label}
                   </a>
-                </Button>
-              </motion.div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-green-900/30 to-emerald-900/30 border-green-800/50 backdrop-blur-lg opacity-60">
-          <CardContent className="p-8 text-center">
-            <div className="relative">
-              <div className="absolute -top-2 -right-2 w-3 h-3 bg-gradient-to-r from-purple-400 to-violet-400 rounded-full animate-pulse"></div>
-              <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-gradient-to-r from-red-400 to-pink-400 rounded-full animate-pulse"></div>
-              <h3 className="text-2xl font-bold text-white mb-2">PLAY STORE</h3>
-              <p className="text-lg text-gray-400">🚧 Segera Hadir</p>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Play Store Tester Guide */}
-      <section id="playstore" className="max-w-6xl mx-auto mb-20">
-        <Card className="bg-gradient-to-r from-gray-900/50 to-slate-900/50 border-gray-700 backdrop-blur-lg mb-8">
-          <CardHeader>
-            <CardTitle className="text-3xl md:text-4xl text-white text-center">Cara Download via Play Store (Tester)</CardTitle>
-            <CardDescription className="text-center">Ikuti langkah-langkah berikut untuk menjadi tester dan mengunduh aplikasi dari Play Store</CardDescription>
-          </CardHeader>
-        </Card>
-
-        <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg">
-          <CardContent className="p-6 text-gray-300">
-            <ol className="list-decimal pl-6 space-y-3">
-              <li>
-                Gabung ke Google Group NANIMEID terlebih dahulu:
-                {" "}
-                <a
-                  href="https://groups.google.com/g/nanimeid/c/gpnoSoo8Ko4/m/oF2QO96fAgAJ"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-indigo-400 underline hover:text-indigo-300"
-                >
-                  Link Google Group
+                ))}
+                <a href="#download" className="ml-2 inline-flex items-center gap-2 text-sm font-bold bg-brand-500 rounded-xl px-4 py-2 hover:bg-brand-600 transition-colors shadow-lg shadow-brand-500/25">
+                  <Download className="w-4 h-4" /> Download
                 </a>
-              </li>
-              <li>
-                Buka postingan di group tersebut, lalu klik link yang ada pada postingan itu untuk menuju halaman pengujian.
-              </li>
-              <li>
-                Di halaman pengujian, klik tombol <span className="text-white font-semibold">Become tester</span>.
-              </li>
-              <li>
-                Pastikan Anda login ke Google Play Store dengan akun yang sudah bergabung ke Google Group.
-              </li>
-              <li>
-                Buka Play Store dan cari paket berikut: <span className="text-white font-semibold">com.nanime.id</span>.
-                Setelah itu, Anda bisa menginstal aplikasinya seperti biasa.
-              </li>
-            </ol>
-
-            <div className="mt-6">
-              <Card className="bg-gradient-to-br from-blue-900/50 to-indigo-900/50 border-blue-800">
-                <CardContent className="p-4">
-                  <p className="text-sm text-gray-200">
-                    Catatan: Proses propagasi akses tester pada Play Store bisa membutuhkan beberapa menit setelah Anda menekan "Become tester".
-                    Jika aplikasi belum muncul, coba tutup-buka kembali Play Store atau bersihkan cache Play Store.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Warning Section */}
-      <section className="mb-20 w-full max-w-4xl mx-auto">
-        <Card className="bg-gradient-to-r from-red-900/50 to-orange-900/50 border-red-800 backdrop-blur-lg">
-          <CardContent className="p-8">
-            <div className="flex items-center justify-center mb-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg mr-4 flex items-center justify-center">
-                <Shield className="w-8 h-8 text-white" strokeWidth={2} />
               </div>
-              <CardTitle className="text-3xl md:text-4xl text-white">
-                PERHATIAN!
-              </CardTitle>
-            </div>
-            <p className="text-gray-300 text-xl text-center">
-              HANYA DOWNLOAD DARI LINK RESMI DI ATAS!<br/>
-              WASPADAI APLIKASI PALSU & MALWARE!
-            </p>
-          </CardContent>
-        </Card>
-      </section>
 
-      {/* Stats Section - temporarily disabled */}
-      {false && (
-        <section className="mb-20 w-full max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-yellow-300 border-8 border-black p-6 text-center transform rotate-2 shadow-[8px_8px_0px_0px_#000000] hover:translate-y-[-4px] transition-transform">
-              <div className="flex items-center justify-center gap-2 text-5xl font-black text-black mb-2"><Play className="w-8 h-8" strokeWidth={3} />1000+</div>
-              <div className="text-xl font-bold text-black uppercase">Anime Series</div>
+              <button className="md:hidden p-2 rounded-lg hover:bg-white/5" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
+                {menuOpen ? <XIcon /> : <Menu />}
+              </button>
             </div>
-            
-            <div className="bg-purple-500 border-8 border-black p-6 text-center transform -rotate-1 shadow-[8px_8px_0px_0px_#000000] hover:translate-y-[-4px] transition-transform">
-              <div className="flex items-center justify-center gap-2 text-5xl font-black text-white mb-2"><Users className="w-8 h-8" strokeWidth={3} />50K+</div>
-              <div className="text-xl font-bold text-white uppercase">Users Aktif</div>
+
+            {menuOpen && (
+              <div className="glass rounded-2xl mt-2 p-3 md:hidden flex flex-col">
+                {navLinks.map((l) => (
+                  <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)} className="px-4 py-3 text-sm text-[#a7a2a7] hover:text-white rounded-lg hover:bg-white/5">
+                    {l.label}
+                  </a>
+                ))}
+              </div>
+            )}
+          </nav>
+        </header>
+
+        {/* ---------- Hero ---------- */}
+        <section className="relative pt-36 pb-20 px-6">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-brand-500/20 rounded-full blur-[140px] animate-blob" />
+            <div className="absolute top-20 right-0 w-[420px] h-[420px] bg-brand-700/15 rounded-full blur-[140px] animate-blob" style={{ animationDelay: "-4s" }} />
+            <div className="absolute bottom-0 left-1/3 w-[400px] h-[400px] bg-accent-500/8 rounded-full blur-[140px] animate-blob" style={{ animationDelay: "-8s" }} />
+            <div className="absolute inset-0 bg-grid [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />
+          </div>
+
+          <div className="relative max-w-6xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
+            {/* Left copy */}
+            <div>
+              <Reveal>
+                <span className="inline-flex items-center gap-2 text-xs font-bold text-brand-300 bg-brand-500/10 border border-brand-500/25 rounded-full px-4 py-1.5 mb-6">
+                  <span className="w-2 h-2 rounded-full bg-brand-400 animate-pulse" />
+                  v3.0.5 — Tersedia di Play Store
+                </span>
+              </Reveal>
+              <Reveal delay={80}>
+                <h1 className="font-display text-5xl md:text-6xl xl:text-7xl leading-[1.05] tracking-tight mb-6">
+                  Nonton Anime<br />
+                  <span className="text-gradient">Tanpa Ribet.</span>
+                </h1>
+              </Reveal>
+              <Reveal delay={160}>
+                <p className="text-[#a7a2a7] text-lg md:text-xl leading-relaxed mb-8 max-w-lg">
+                  Streaming anime favoritmu dengan UI modern, bebas iklan mengganggu, dan update episode setiap hari. Semua gratis.
+                </p>
+              </Reveal>
+              <Reveal delay={240}>
+                <div className="flex flex-wrap gap-4 mb-10">
+                  <a href="#download" className="group inline-flex items-center gap-2 bg-brand-500 rounded-2xl px-7 py-3.5 font-bold shadow-xl shadow-brand-500/25 hover:bg-brand-600 hover:scale-[1.03] active:scale-95 transition-all">
+                    <Download className="w-5 h-5" /> Download Sekarang
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </a>
+                  <a href="#features" className="inline-flex items-center gap-2 glass rounded-2xl px-7 py-3.5 font-bold text-[#f5f2f3] hover:bg-white/10 transition-colors">
+                    Lihat Fitur
+                  </a>
+                </div>
+              </Reveal>
+              <Reveal delay={320}>
+                <div className="flex items-center gap-8 text-sm text-[#a7a2a7]">
+                  <div><span className="block text-2xl font-display text-white">1000+</span>Judul Anime</div>
+                  <div className="w-px h-10 bg-night-700" />
+                  <div><span className="block text-2xl font-display text-white">Harian</span>Update Episode</div>
+                  <div className="w-px h-10 bg-night-700" />
+                  <div><span className="block text-2xl font-display text-white">0</span>Iklan Ganggu</div>
+                </div>
+              </Reveal>
             </div>
-            
-            <div className="bg-green-500 border-8 border-black p-6 text-center transform rotate-1 shadow-[8px_8px_0px_0px_#000000] hover:translate-y-[-4px] transition-transform">
-              <div className="flex items-center justify-center gap-2 text-5xl font-black text-black mb-2"><Clock className="w-8 h-8" strokeWidth={3} />24/7</div>
-              <div className="text-xl font-bold text-black uppercase">Server Online</div>
+
+            {/* Right: phone mockup */}
+            <Reveal delay={200} className="hidden lg:block">
+              <div className="relative mx-auto w-[300px] animate-float">
+                <div className="absolute -inset-6 bg-brand-500/25 rounded-[3rem] blur-2xl" />
+                <div className="relative rounded-[2.6rem] border-[10px] border-night-800 bg-night-950 shadow-2xl overflow-hidden">
+                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-5 bg-night-800 rounded-full z-10" />
+                  <div className="pt-10 pb-6 px-4 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5">
+                        <img src="/icon.png" alt="" className="w-5 h-5" />
+                        <span className="font-display text-sm">NANIMEID</span>
+                      </div>
+                      <div className="w-7 h-7 rounded-full bg-brand-500" />
+                    </div>
+                    <div className="h-8 rounded-full bg-night-900 border border-night-700 flex items-center px-3 text-[10px] text-[#a7a2a7]">Cari anime...</div>
+                    <div className="relative h-36 rounded-2xl bg-gradient-to-br from-brand-600 to-brand-900 overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                      <div className="absolute bottom-3 left-3 right-3">
+                        <div className="text-xs font-bold mb-1">Anime Trending #1</div>
+                        <div className="flex gap-1.5">
+                          <span className="text-[8px] bg-white/20 rounded-full px-2 py-0.5">Action</span>
+                          <span className="text-[8px] bg-white/20 rounded-full px-2 py-0.5">2025</span>
+                        </div>
+                      </div>
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
+                        <Play className="w-4 h-4" />
+                      </div>
+                    </div>
+                    <div className="text-[10px] font-bold text-[#a7a2a7]">Lanjutkan Nonton</div>
+                    <div className="grid grid-cols-3 gap-2">
+                      {["from-brand-700 to-brand-900", "from-night-700 to-night-800", "from-brand-800 to-night-800"].map((g, i) => (
+                        <div key={i} className={`h-20 rounded-xl bg-gradient-to-br ${g} relative overflow-hidden`}>
+                          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" />
+                          <div className="absolute bottom-1 left-1.5 right-1.5 h-1 rounded-full bg-white/30"><div className="h-full w-2/3 rounded-full bg-brand-400" /></div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex justify-around pt-1">
+                      {[1, 0, 0, 0].map((active, i) => (
+                        <div key={i} className={`w-8 h-1.5 rounded-full ${active ? "bg-brand-400" : "bg-night-700"}`} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ---------- Marquee ---------- */}
+        <div className="relative border-y border-night-700 bg-night-900/40 py-4 overflow-hidden">
+          <div className="flex whitespace-nowrap animate-marquee w-max">
+            {[...marqueeItems, ...marqueeItems].map((item, i) => (
+              <span key={i} className="mx-8 font-sans text-sm font-bold tracking-[0.25em] text-[#a7a2a7] flex items-center gap-8">
+                {item} <span className="w-1.5 h-1.5 rounded-full bg-brand-500" />
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* ---------- Features ---------- */}
+        <section id="features" className="relative py-24 px-6 scroll-mt-24">
+          <div className="max-w-6xl mx-auto">
+            <Reveal>
+              <SectionHeading eyebrow="Kenapa NanimeID" title={<>Fitur yang bikin <span className="text-gradient">betah nonton</span></>} sub="Semua yang kamu butuhkan untuk marathon anime, dalam satu aplikasi ringan." />
+            </Reveal>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {features.map((f, i) => (
+                <Reveal key={f.title} delay={i * 70}>
+                  <div className="group glass rounded-3xl p-7 h-full hover:bg-night-800 hover:border-night-600 hover:-translate-y-1 transition-all duration-300">
+                    <div className="w-12 h-12 rounded-2xl bg-brand-500 flex items-center justify-center mb-5 shadow-lg shadow-brand-500/25 group-hover:scale-110 transition-transform">
+                      <f.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="text-xl font-extrabold mb-2">{f.title}</h3>
+                    <p className="text-[#a7a2a7] leading-relaxed">{f.desc}</p>
+                  </div>
+                </Reveal>
+              ))}
             </div>
           </div>
         </section>
-      )}
 
-      {/* Roadmap / Future Plans */}
-      <section className="max-w-6xl mx-auto mb-20">
-        <Card className="bg-gradient-to-r from-blue-900/50 to-cyan-900/50 border-blue-800 backdrop-blur-lg mb-8">
-          <CardHeader>
-            <CardTitle className="text-3xl md:text-4xl text-white text-center">Rencana Besar ke Depan</CardTitle>
-          </CardHeader>
-        </Card>
+        {/* ---------- Download ---------- */}
+        <section id="download" className="relative py-24 px-6 scroll-mt-24">
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-brand-500/12 rounded-full blur-[140px]" />
+          </div>
+          <div className="relative max-w-4xl mx-auto">
+            <Reveal>
+              <SectionHeading eyebrow="Download" title={<>Pilih platform <span className="text-gradient">favoritmu</span></>} sub="Tersedia untuk Android via Google Play dan Windows (Beta)." />
+            </Reveal>
 
-        <div className="grid grid-cols-1 gap-6">
-          <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-white">1. Buat versi webnya</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300">Menghadirkan versi web NANIMEID agar bisa diakses langsung dari browser dengan performa cepat dan tampilan responsif.</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-green-900/50 to-emerald-900/50 border-green-800 backdrop-blur-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-white">2. Baca komik manga dalam 1 app</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300">Menambahkan fitur pembaca manga terintegrasi, sehingga pengguna bisa streaming anime dan membaca manga dalam satu aplikasi.</p>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Play Store */}
+              <Reveal>
+                <div className="group relative glass rounded-3xl p-8 h-full flex flex-col hover:border-brand-500/50 hover:-translate-y-1.5 transition-all duration-300 overflow-hidden">
+                  <div className="absolute -top-16 -right-16 w-40 h-40 bg-brand-500/20 rounded-full blur-3xl group-hover:bg-brand-500/30 transition-colors" />
+                  <div className="relative flex flex-col h-full">
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="w-14 h-14 rounded-2xl bg-brand-500 flex items-center justify-center shadow-lg shadow-brand-500/25">
+                        <GooglePlay className="w-7 h-7 text-white" />
+                      </div>
+                      <span className="text-[10px] font-bold tracking-widest uppercase text-brand-300 bg-brand-500/10 border border-brand-500/25 rounded-full px-3 py-1">v3.0.5</span>
+                    </div>
+                    <h3 className="text-2xl font-extrabold mb-1">Google Play</h3>
+                    <p className="text-sm text-[#a7a2a7] mb-4">Android — rilis resmi</p>
+                    <ul className="space-y-2 text-sm text-[#a7a2a7] mb-8">
+                      <li className="flex gap-2"><Check className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" /> Instal resmi dari Play Store</li>
+                      <li className="flex gap-2"><Check className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" /> Update otomatis tiap rilis</li>
+                      <li className="flex gap-2"><Check className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" /> Aman & terverifikasi</li>
+                    </ul>
+                    <a href="https://play.google.com/store/apps/details?id=com.nanime.id" target="_blank" rel="noopener noreferrer" className="mt-auto w-full inline-flex items-center justify-center gap-2 bg-brand-500 rounded-xl px-5 py-3 font-bold text-sm hover:bg-brand-600 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-brand-500/25">
+                      <GooglePlay className="w-5 h-5" /> Download di Play Store
+                    </a>
+                  </div>
+                </div>
+              </Reveal>
 
-      {/* Community Section */}
-      <section id="community" className="max-w-4xl mx-auto mb-20 text-center">
-        <Card className="bg-gradient-to-r from-green-900/50 to-emerald-900/50 border-green-800 backdrop-blur-lg mb-6">
-          <CardHeader>
-            <CardTitle className="text-3xl md:text-4xl text-white">Gabung Komunitas WA</CardTitle>
-          </CardHeader>
-        </Card>
-        <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg max-w-2xl mx-auto mb-8">
-          <CardContent className="p-6">
-            <p className="text-gray-300 text-lg">
-              Ayo gabung ke grup WhatsApp resmi NANIMEID untuk update terbaru, diskusi anime, dan info rilis!
-            </p>
-          </CardContent>
-        </Card>
-        <div className="mt-8">
-          <Button asChild variant="modern" size="lg" className="text-2xl px-10 py-6">
-            <a
-              href="https://chat.whatsapp.com/DbwAK4QpGYu5h3dBUp3btc?mode=ems_copy_c"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Gabung Komunitas WhatsApp NANIMEID"
-            >
-              🚀 Gabung di WhatsApp
-            </a>
-          </Button>
-        </div>
-      </section>
+              {/* Windows */}
+              <Reveal delay={120}>
+                <div className="group relative glass rounded-3xl p-8 h-full flex flex-col hover:border-night-600 hover:-translate-y-1.5 transition-all duration-300 overflow-hidden">
+                  <div className="absolute -top-16 -right-16 w-40 h-40 bg-brand-500/10 rounded-full blur-3xl group-hover:bg-brand-500/20 transition-colors" />
+                  <div className="relative flex flex-col h-full">
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="w-14 h-14 rounded-2xl bg-brand-500 flex items-center justify-center shadow-lg shadow-brand-500/25">
+                        <WindowsIcon className="w-7 h-7 text-white" />
+                      </div>
+                      <span className="text-[10px] font-bold tracking-widest uppercase text-brand-300 bg-brand-500/10 border border-brand-500/25 rounded-full px-3 py-1">v1.0.0 Beta</span>
+                    </div>
+                    <h3 className="text-2xl font-extrabold mb-1">Windows</h3>
+                    <p className="text-sm text-[#a7a2a7] mb-4">Desktop — v1.0.0 Beta</p>
+                    <ul className="space-y-2 text-sm text-[#a7a2a7] mb-8">
+                      <li className="flex gap-2"><Check className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" /> Nonton di layar besar</li>
+                      <li className="flex gap-2"><Check className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" /> Windows 10 / 11</li>
+                      <li className="flex gap-2"><Check className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" /> Sinkron dengan versi mobile</li>
+                    </ul>
+                    <a href="https://cdn-stable.nanimeid.xyz/file/NanimeID-V2/NanimeID/1.0.0_Windows/NanimeID%20Desktop%20Setup%201.0.0.exe" target="_blank" rel="noopener noreferrer" className="mt-auto w-full inline-flex items-center justify-center gap-2 bg-brand-500 rounded-xl px-5 py-3 font-bold text-sm hover:bg-brand-600 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-brand-500/25">
+                      <Download className="w-5 h-5" /> Download untuk Windows
+                    </a>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
 
-      {/* Footer */}
-      <footer className="w-full border-t border-gray-700 pt-8">
-        <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-lg max-w-2xl mx-auto text-center">
-          <CardContent className="p-6">
-            <p className="font-bold text-lg text-white mb-2">
-              © 2025 NANIMEID
-            </p>
-            <p className="text-gray-400">
-              SEMUA HAK DILINDUNGI UNDANG-UNDANG
-            </p>
-          </CardContent>
-        </Card>
-        
-        {/* Decorative elements */}
-        <div className="flex justify-center items-center mt-8 gap-4">
-          <div className="w-4 h-4 bg-gradient-to-r from-red-500 to-pink-500 rounded-full animate-pulse"></div>
-          <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-pulse"></div>
-          <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full animate-pulse"></div>
-          <div className="w-5 h-5 bg-gradient-to-r from-purple-500 to-violet-500 rounded-full animate-pulse"></div>
-          <div className="w-4 h-4 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full animate-pulse"></div>
-        </div>
-      </footer>
-    </main>
+            {/* Warning */}
+            <Reveal delay={200}>
+              <div className="mt-8 glass rounded-2xl px-6 py-4 flex items-center justify-center gap-3 text-center border-amber-500/20 bg-amber-500/[0.04]">
+                <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />
+                <p className="text-sm text-amber-200/90">
+                  Hanya download dari link resmi di halaman ini. Waspadai aplikasi palsu & malware!
+                </p>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ---------- Community ---------- */}
+        <section id="community" className="relative py-24 px-6 scroll-mt-24">
+          <div className="max-w-4xl mx-auto">
+            <Reveal>
+              <div className="relative glass rounded-[2.5rem] p-10 md:p-14 text-center overflow-hidden">
+                <div className="absolute -top-24 left-1/4 w-64 h-64 bg-brand-500/20 rounded-full blur-[100px]" />
+                <div className="absolute -bottom-24 right-1/4 w-64 h-64 bg-accent-500/10 rounded-full blur-[100px]" />
+                <div className="relative">
+                  <span className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-brand-300 bg-brand-500/10 border border-brand-500/25 rounded-full px-4 py-1.5 mb-6">
+                    Komunitas
+                  </span>
+                  <h2 className="font-display text-4xl md:text-5xl tracking-tight mb-4">
+                    Gabung <span className="text-gradient">komunitas</span> kami
+                  </h2>
+                  <p className="text-[#a7a2a7] text-lg max-w-xl mx-auto mb-9">
+                    Update rilis terbaru, diskusi anime, dan info fitur — langsung dari grup WhatsApp resmi NANIMEID.
+                  </p>
+                  <a
+                    href="https://chat.whatsapp.com/DbwAK4QpGYu5h3dBUp3btc?mode=ems_copy_c"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-brand-500 rounded-2xl px-8 py-4 font-bold text-lg shadow-xl shadow-brand-500/25 hover:bg-brand-600 hover:scale-[1.03] active:scale-95 transition-all"
+                  >
+                    Gabung di WhatsApp <ArrowRight className="w-5 h-5" />
+                  </a>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ---------- Footer ---------- */}
+        <footer className="border-t border-night-700 py-10 px-6">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <img src="/icon.png" alt="NanimeID" className="w-8 h-8" />
+              <span className="font-display">NANIMEID</span>
+            </div>
+            <div className="flex items-center gap-5 text-sm text-[#a7a2a7]">
+              <span>© 2025 NANIMEID</span>
+              <a href="/privacy" className="hover:text-white transition-colors">Kebijakan Privasi</a>
+            </div>
+            <div className="flex gap-2">
+              {["bg-brand-500", "bg-brand-300", "bg-accent-500"].map((c, i) => (
+                <span key={i} className={`w-2 h-2 rounded-full ${c} animate-pulse`} style={{ animationDelay: `${i * 300}ms` }} />
+              ))}
+            </div>
+          </div>
+        </footer>
+      </main>
     </>
   );
 }
