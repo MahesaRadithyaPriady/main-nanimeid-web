@@ -319,16 +319,16 @@ export default function Home() {
                       <div className="w-14 h-14 rounded-2xl bg-brand-500 flex items-center justify-center shadow-lg shadow-brand-500/25">
                         <WindowsIcon className="w-7 h-7 text-white" />
                       </div>
-                      <span className="text-[10px] font-bold tracking-widest uppercase text-brand-300 bg-brand-500/10 border border-brand-500/25 rounded-full px-3 py-1">v1.0.0 Beta</span>
+                      <span className="text-[10px] font-bold tracking-widest uppercase text-brand-300 bg-brand-500/10 border border-brand-500/25 rounded-full px-3 py-1">v1.0.4 Beta</span>
                     </div>
                     <h3 className="text-2xl font-extrabold mb-1">Windows</h3>
-                    <p className="text-sm text-[#a7a2a7] mb-4">Desktop — v1.0.0 Beta</p>
+                    <p className="text-sm text-[#a7a2a7] mb-4">Desktop — v1.0.4 Beta</p>
                     <ul className="space-y-2 text-sm text-[#a7a2a7] mb-8">
                       <li className="flex gap-2"><Check className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" /> Nonton di layar besar</li>
                       <li className="flex gap-2"><Check className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" /> Windows 10 / 11</li>
                       <li className="flex gap-2"><Check className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" /> Sinkron dengan versi mobile</li>
                     </ul>
-                    <a href="https://cdn-stable.nanimeid.xyz/file/NanimeID-V2/NanimeID/1.0.0_Windows/NanimeID%20Desktop%20Setup%201.0.0.exe" target="_blank" rel="noopener noreferrer" className="mt-auto w-full inline-flex items-center justify-center gap-2 bg-brand-500 rounded-xl px-5 py-3 font-bold text-sm hover:bg-brand-600 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-brand-500/25">
+                    <a href="https://cdn-stable.nanimeid.xyz/file/NanimeID-V2/Kira/Release/Desktop/NanimeID%20Desktop%20Setup%201.0.4.exe" target="_blank" rel="noopener noreferrer" className="mt-auto w-full inline-flex items-center justify-center gap-2 bg-brand-500 rounded-xl px-5 py-3 font-bold text-sm hover:bg-brand-600 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-brand-500/25">
                       <Download className="w-5 h-5" /> Download untuk Windows
                     </a>
                   </div>
