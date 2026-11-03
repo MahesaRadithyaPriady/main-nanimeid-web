@@ -849,7 +849,7 @@ export default function Home() {
                         <li className="flex gap-2"><Check className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" /> Fitur sama dengan Windows</li>
                         <li className="flex gap-2"><Check className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" /> Update otomatis dalam app</li>
                       </ul>
-                      <a href="https://mainappsv1.nanimeid.xyz/2.1.0/static/desktop/NanimeID-Desktop-1.0.4-amd64.deb" target="_blank" rel="noopener noreferrer" className="mt-auto w-full inline-flex items-center justify-center gap-2 bg-brand-500 rounded-xl px-5 py-3 font-bold text-sm hover:bg-brand-600 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-brand-500/25">
+                      <a href="https://cdn-stable.nanimeid.xyz/file/NanimeID-V2/Kira/Release/Desktop/NanimeID-Desktop-1.0.4-amd64.deb" target="_blank" rel="noopener noreferrer" className="mt-auto w-full inline-flex items-center justify-center gap-2 bg-brand-500 rounded-xl px-5 py-3 font-bold text-sm hover:bg-brand-600 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-brand-500/25">
                         <LinuxIcon className="w-5 h-5" /> Download untuk Linux
                       </a>
                     </div>
@@ -939,7 +939,7 @@ export default function Home() {
                     </a>
                   </li>
                   <li>
-                    <a href="https://mainappsv1.nanimeid.xyz/2.1.0/static/desktop/NanimeID-Desktop-1.0.4-amd64.deb" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                    <a href="https://cdn-stable.nanimeid.xyz/file/NanimeID-V2/Kira/Release/Desktop/NanimeID-Desktop-1.0.4-amd64.deb" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white transition-colors">
                       <LinuxIcon className="w-4 h-4" /> Linux — v1.0.4 (.deb)
                     </a>
                   </li>
