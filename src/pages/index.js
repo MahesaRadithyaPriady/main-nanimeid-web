@@ -46,6 +46,12 @@ const WindowsIcon = ({ className = "w-6 h-6" }) => (
   </svg>
 );
 
+const LinuxIcon = ({ className = "w-6 h-6" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2c-2.1 0-3.6 1.2-4.1 3-.3 1-.4 2.2-.4 3.3-.6.4-1.2 1.2-1.5 2.2-.4 1.1-.9 2.6-1.6 4.2-.8 1.9-1.9 3.6-1.9 4.9 0 .5.2.9.5 1.2.9.8 2.6.9 4.3.9.9 0 1.8 0 2.6.2.7.1 1.3.1 2.1.1s1.4 0 2.1-.1c.8-.2 1.7-.2 2.6-.2 1.7 0 3.4-.1 4.3-.9.3-.3.5-.7.5-1.2 0-1.3-1.1-3-1.9-4.9-.7-1.6-1.2-3.1-1.6-4.2-.3-1-.9-1.8-1.5-2.2 0-1.1-.1-2.3-.4-3.3C15.6 3.2 14.1 2 12 2zm-1.9 4.2c.4 0 .8.4.8.9s-.4.9-.8.9-.8-.4-.8-.9.4-.9.8-.9zm3.8 0c.4 0 .8.4.8.9s-.4.9-.8.9-.8-.4-.8-.9.4-.9.8-.9zM12 9.4l1.6.7-0.4.9h-2.4l-.4-.9 1.6-.7zm-2.3 2.4c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5.7-1.5 1.5-1.5zm4.6 0c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5.7-1.5 1.5-1.5z" />
+  </svg>
+);
+
 const WhatsApp = ({ className = "w-5 h-5" }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor">
     <path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.89 1.22 3.09.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.42.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35zM12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.64-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88a9.83 9.83 0 0 1 9.89 9.89c0 5.45-4.44 9.87-9.9 9.87zM20.46 3.49A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.18-1.24-6.16-3.48-8.41z" />
@@ -763,10 +769,10 @@ export default function Home() {
           </div>
           <div className="relative max-w-4xl mx-auto">
             <Reveal>
-              <SectionHeading eyebrow="Download" title={<>Pilih platform <span className="text-gradient">favoritmu</span></>} sub="Tersedia untuk Android via Google Play dan Windows (Desktop)." />
+              <SectionHeading eyebrow="Download" title={<>Pilih platform <span className="text-gradient">favoritmu</span></>} sub="Tersedia untuk Android via Google Play, Windows, dan Linux (Desktop)." />
             </Reveal>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Play Store */}
               <Reveal>
                 <TiltCard className="h-full" max={5}>
@@ -817,6 +823,34 @@ export default function Home() {
                       </ul>
                       <a href="https://cdn-stable.nanimeid.xyz/file/NanimeID-V2/Kira/Release/Desktop/NanimeID%20Desktop%20Setup%201.0.4.exe" target="_blank" rel="noopener noreferrer" className="mt-auto w-full inline-flex items-center justify-center gap-2 bg-brand-500 rounded-xl px-5 py-3 font-bold text-sm hover:bg-brand-600 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-brand-500/25">
                         <WindowsIcon className="w-5 h-5" /> Download untuk Windows
+                      </a>
+                    </div>
+                  </div>
+                </TiltCard>
+              </Reveal>
+
+              {/* Linux */}
+              <Reveal delay={240}>
+                <TiltCard className="h-full" max={5}>
+                  <div className="glow-card group relative glass rounded-3xl p-8 h-full flex flex-col hover:bg-night-800 transition-colors duration-300 overflow-hidden">
+                    <Corners />
+                    <div className="absolute -top-16 -right-16 w-40 h-40 bg-brand-500/10 rounded-full blur-3xl" />
+                    <div className="relative flex flex-col h-full">
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="w-14 h-14 rounded-2xl bg-brand-500 flex items-center justify-center shadow-lg shadow-brand-500/25">
+                          <LinuxIcon className="w-7 h-7 text-white" />
+                        </div>
+                        <span className="text-[10px] font-bold tracking-widest uppercase text-brand-300 bg-brand-500/10 border border-brand-500/25 rounded-full px-3 py-1">v1.0.4</span>
+                      </div>
+                      <h3 className="text-2xl font-extrabold mb-1">Linux</h3>
+                      <p className="text-sm text-[#a7a2a7] mb-4">Desktop — v1.0.4</p>
+                      <ul className="space-y-2 text-sm text-[#a7a2a7] mb-8">
+                        <li className="flex gap-2"><Check className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" /> Ubuntu / Debian (.deb)</li>
+                        <li className="flex gap-2"><Check className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" /> Fitur sama dengan Windows</li>
+                        <li className="flex gap-2"><Check className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" /> Update otomatis dalam app</li>
+                      </ul>
+                      <a href="https://mainappsv1.nanimeid.xyz/2.1.0/static/desktop/NanimeID-Desktop-1.0.4-amd64.deb" target="_blank" rel="noopener noreferrer" className="mt-auto w-full inline-flex items-center justify-center gap-2 bg-brand-500 rounded-xl px-5 py-3 font-bold text-sm hover:bg-brand-600 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-brand-500/25">
+                        <LinuxIcon className="w-5 h-5" /> Download untuk Linux
                       </a>
                     </div>
                   </div>
@@ -880,7 +914,7 @@ export default function Home() {
                 </div>
                 <p className="text-sm text-[#a7a2a7] leading-relaxed max-w-xs">
                   Streaming anime dengan UI modern, bebas iklan, dan update harian.
-                  Tersedia di Android dan Windows.
+                  Tersedia di Android, Windows, dan Linux.
                 </p>
               </div>
               <div>
@@ -902,6 +936,11 @@ export default function Home() {
                   <li>
                     <a href="https://cdn-stable.nanimeid.xyz/file/NanimeID-V2/Kira/Release/Desktop/NanimeID%20Desktop%20Setup%201.0.4.exe" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white transition-colors">
                       <Monitor className="w-4 h-4" /> Windows — v1.0.4
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://mainappsv1.nanimeid.xyz/2.1.0/static/desktop/NanimeID-Desktop-1.0.4-amd64.deb" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white transition-colors">
+                      <LinuxIcon className="w-4 h-4" /> Linux — v1.0.4 (.deb)
                     </a>
                   </li>
                   <li>
