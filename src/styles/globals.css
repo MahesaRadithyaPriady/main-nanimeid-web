@@ -86,3 +86,185 @@ body {
   background-size: 200% auto;
   animation: shine 6s linear infinite;
 }
+
+/* Partikel melayang ala official site game */
+@keyframes particle-rise {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  10% { opacity: var(--p-opacity, 0.5); }
+  90% { opacity: var(--p-opacity, 0.5); }
+  100% { transform: translateY(-46vh) scale(0.6); opacity: 0; }
+}
+.particle {
+  position: absolute;
+  bottom: -4vh;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(169,184,255,0.9), rgba(113,139,255,0));
+  animation: particle-rise linear infinite;
+  pointer-events: none;
+}
+
+/* Marquee poster lambat (strip key visual) */
+@keyframes poster-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-poster-marquee {
+  animation: poster-marquee 60s linear infinite;
+}
+.animate-poster-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Denyut glow lembut untuk logo/CTA hero */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.06); }
+}
+.animate-glow-pulse {
+  animation: glow-pulse 5s ease-in-out infinite;
+}
+
+/* Sudut ornamen ala frame UI game */
+.corner {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-color: rgba(141, 162, 255, 0.55);
+  pointer-events: none;
+}
+.corner-tl { top: -1px; left: -1px; border-top: 2px solid; border-left: 2px solid; border-top-left-radius: 14px; }
+.corner-tr { top: -1px; right: -1px; border-top: 2px solid; border-right: 2px solid; border-top-right-radius: 14px; }
+.corner-bl { bottom: -1px; left: -1px; border-bottom: 2px solid; border-left: 2px solid; border-bottom-left-radius: 14px; }
+.corner-br { bottom: -1px; right: -1px; border-bottom: 2px solid; border-right: 2px solid; border-bottom-right-radius: 14px; }
+
+/* Sembunyikan scrollbar strip poster */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Judul serif dengan garis ornamen kiri-kanan */
+.ornate-title {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.ornate-title::before,
+.ornate-title::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  max-width: 120px;
+  background: linear-gradient(90deg, transparent, rgba(141,162,255,0.5));
+}
+.ornate-title::after {
+  background: linear-gradient(90deg, rgba(141,162,255,0.5), transparent);
+}
+
+/* Ken-burns: dinding poster perlahan membesar */
+@keyframes ken-burns {
+  0% { transform: scale(1) translateY(0); }
+  100% { transform: scale(1.12) translateY(-2%); }
+}
+.animate-ken-burns {
+  animation: ken-burns 40s ease-in-out infinite alternate;
+}
+
+/* Sinar cahaya berputar pelan dari atas */
+@keyframes beam-sway {
+  0%, 100% { transform: rotate(-8deg); opacity: 0.5; }
+  50% { transform: rotate(8deg); opacity: 0.8; }
+}
+.beam {
+  position: absolute;
+  top: -30%;
+  width: 240px;
+  height: 130%;
+  background: linear-gradient(to bottom, rgba(141,162,255,0.16), rgba(113,139,255,0.02) 60%, transparent);
+  filter: blur(28px);
+  transform-origin: top center;
+  animation: beam-sway 11s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Teks outline raksasa (watermark) */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(141, 162, 255, 0.14);
+}
+
+/* Kilau menyapu wordmark */
+@keyframes shine-sweep {
+  0% { background-position: -200% center; }
+  55%, 100% { background-position: 200% center; }
+}
+.shine-text {
+  background: linear-gradient(100deg, #f5f2f3 40%, #a9b8ff 50%, #f5f2f3 60%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shine-sweep 7s ease-in-out infinite;
+}
+
+/* Border gradient berputar (kartu download) */
+@keyframes border-spin {
+  to { transform: rotate(1turn); }
+}
+.glow-card {
+  position: relative;
+}
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(from var(--angle, 0deg), rgba(113,139,255,0), rgba(141,162,255,0.7), rgba(255,93,138,0.4), rgba(113,139,255,0));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.glow-card:hover::before {
+  opacity: 1;
+  animation: border-spin 4s linear infinite;
+}
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Melayang dengan kemiringan 3D */
+@keyframes float-tilt {
+  0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
+  50% { transform: translateY(-16px) rotate(var(--tilt, 0deg)); }
+}
+.float-tilt {
+  animation: float-tilt 7s ease-in-out infinite;
+}
+
+/* Pembatas ornamen: garis — belah ketupat — garis */
+.ornate-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.ornate-divider::before,
+.ornate-divider::after {
+  content: "";
+  height: 1px;
+  width: min(180px, 28vw);
+  background: linear-gradient(90deg, transparent, rgba(141,162,255,0.45));
+}
+.ornate-divider::after {
+  background: linear-gradient(90deg, rgba(141,162,255,0.45), transparent);
+}
+.ornate-diamond {
+  width: 9px;
+  height: 9px;
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, #a9b8ff, #718bff);
+  box-shadow: 0 0 12px rgba(113,139,255,0.7);
+}
