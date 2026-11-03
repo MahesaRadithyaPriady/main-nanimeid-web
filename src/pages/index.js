@@ -503,6 +503,12 @@ export default function Home() {
                   top="Download untuk"
                   bottom="Windows PC — v1.0.4"
                 />
+                <StoreBadge
+                  href="https://cdn-stable.nanimeid.xyz/file/NanimeID-V2/Kira/Release/Desktop/NanimeID-Desktop-1.0.4-amd64.deb"
+                  icon={LinuxIcon}
+                  top="Download untuk"
+                  bottom="Linux — v1.0.4"
+                />
               </div>
             </Reveal>
 
