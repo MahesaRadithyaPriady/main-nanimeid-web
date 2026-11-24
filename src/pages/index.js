@@ -1,6 +1,15 @@
 import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
 
+/* ---------------- Rilis APK Android terbaru ---------------- */
+const APK_LATEST = {
+  version: "3.3.0.0",
+  size: "59,7 MB",
+  date: "24 November 2026",
+  url: "https://cdn-stable.nanimeid.xyz/file/NanimeID-V2/Kira/Release/Android/NanimeID-3.3.0.0.apk",
+  sha256: "7484c588cbf53667d9968838ff0bf44a64d4cf9098a5711fd6ad89426b956f51",
+};
+
 /* ---------------- Icons ---------------- */
 const Svg = ({ children, className = "w-5 h-5", strokeWidth = 2, fill = "none", ...props }) => (
   <svg className={className} fill={fill} stroke="currentColor" viewBox="0 0 24 24" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -461,7 +470,7 @@ export default function Home() {
             <Reveal>
               <span className="inline-flex items-center gap-2 text-xs font-bold text-brand-300 bg-brand-500/10 border border-brand-500/25 rounded-full px-4 py-1.5 mb-7 backdrop-blur">
                 <span className="w-2 h-2 rounded-full bg-brand-400 animate-pulse" />
-                Mobile v3.0.5 &nbsp;•&nbsp; Desktop v1.0.4 — tersedia sekarang
+                Mobile v{APK_LATEST.version} &nbsp;•&nbsp; Desktop v1.0.4 — tersedia sekarang
               </span>
             </Reveal>
 
@@ -776,6 +785,45 @@ export default function Home() {
           <div className="relative max-w-4xl mx-auto">
             <Reveal>
               <SectionHeading eyebrow="Download" title={<>Pilih platform <span className="text-gradient">favoritmu</span></>} sub="Tersedia untuk Android via Google Play, Windows, dan Linux (Desktop)." />
+            </Reveal>
+
+            {/* Rilis terbaru Android (APK langsung) */}
+            <Reveal>
+              <div className="glow-card relative glass rounded-3xl p-6 sm:p-8 mb-6 overflow-hidden border-brand-500/30">
+                <Corners />
+                <div className="absolute -top-20 -left-16 w-56 h-56 bg-brand-500/20 rounded-full blur-3xl pointer-events-none" />
+                <div className="relative flex flex-col md:flex-row md:items-center gap-6">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2 mb-4">
+                      <span className="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-widest uppercase text-white bg-brand-500 rounded-full px-3 py-1 shadow-lg shadow-brand-500/25">
+                        <Sparkles className="w-3 h-3" /> Rilis terbaru
+                      </span>
+                      <span className="text-[10px] font-bold tracking-widest uppercase text-brand-300 bg-brand-500/10 border border-brand-500/25 rounded-full px-3 py-1">v{APK_LATEST.version}</span>
+                      <span className="text-[10px] font-bold tracking-widest uppercase text-[#a7a2a7] bg-white/5 border border-white/10 rounded-full px-3 py-1">APK · {APK_LATEST.size}</span>
+                    </div>
+                    <h3 className="text-2xl sm:text-3xl font-extrabold mb-2">NanimeID {APK_LATEST.version} untuk Android</h3>
+                    <p className="text-sm text-[#a7a2a7] mb-5 max-w-xl">
+                      Mau versi terbaru sekarang juga? Unduh APK resmi langsung dari server NanimeID — tanpa menunggu antrean peninjauan Play Store.
+                    </p>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-[#a7a2a7]">
+                      <li className="flex gap-2"><Zap className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" /> Update lebih cepat, langsung hari ini</li>
+                      <li className="flex gap-2"><Shield className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" /> Aman — file resmi bertanda tangan NanimeID</li>
+                      <li className="flex gap-2"><Check className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" /> Satu file untuk semua HP Android</li>
+                      <li className="flex gap-2"><Check className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" /> Isi identik dengan versi Play Store</li>
+                    </ul>
+                  </div>
+                  <div className="md:w-64 shrink-0 flex flex-col gap-3">
+                    <a href={APK_LATEST.url} target="_blank" rel="noopener noreferrer" className="w-full inline-flex items-center justify-center gap-2 bg-brand-500 rounded-xl px-5 py-3.5 font-bold text-sm hover:bg-brand-600 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-brand-500/25">
+                      <Download className="w-5 h-5" /> Download APK v{APK_LATEST.version}
+                    </a>
+                    <p className="text-[11px] text-[#a7a2a7]/80 text-center">Android 7.0 ke atas · dirilis {APK_LATEST.date}</p>
+                  </div>
+                </div>
+                <div className="relative mt-6 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-sm text-[#a7a2a7] leading-relaxed">
+                  <span className="font-bold text-white">Catatan:</span> versi ini sama persis dengan NanimeID {APK_LATEST.version} yang sedang kami rilis di Google Play. Begitu Play Store selesai diperbarui, kamu bisa kembali update lewat Play Store seperti biasa — tidak ada fitur yang terlewat.
+                </div>
+                <p className="relative mt-3 text-[11px] text-[#a7a2a7]/70 break-all">SHA-256: {APK_LATEST.sha256}</p>
+              </div>
             </Reveal>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
